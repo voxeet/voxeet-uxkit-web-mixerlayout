@@ -1,0 +1,465 @@
+/* GENERAL */
+
+body {
+  background-color: #FBFBFB;
+  font-family: Open Sans,sans-serif;
+  from { transform: rotate(0deg); }
+  from { transform: rotate(360deg); }
+}
+
+.hangup-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  text-align: center;
+  padding: 15px;
+  visibility: hidden;
+}
+
+.hangup-button button {
+  background-color: rgba(0,0,0,0.6);
+  width: 45px;
+  height: 45px;
+  cursor: pointer;
+  border-radius: 50%;
+  font-size: 14px;
+  border: 3px solid #fff;
+}
+
+.hangup-button button img {
+  width: 16px;
+}
+
+.hangup-button button:hover {
+
+}
+
+/* END GENERAL */
+
+/* HIDDEN INPUTS */
+#joinConference, #replayConference {
+  //display: none;
+}
+
+
+/* CONFERENCE ENDED PICTO */
+.conference-ended-picto {
+    text-align: center;
+}
+
+.conference-ended-picto img {
+    position:absolute;
+    top:0;
+    bottom:0;
+    margin:auto;
+}
+
+/* FILE PRESENTATION MODE */
+.tile-presentation {
+    margin: auto;
+}
+
+.tile-presentation img {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #FBFBFB;
+  position: relative;
+  object-fit: contain;
+}
+
+
+/* SCREENSHARE MODE */
+
+.video-pip {
+    position: absolute;
+    left: 20px;
+    width: 150px;
+    height: 150px;
+    z-index:100;
+    background-color: transparent;
+    video {
+      background-color: transparent;
+    }
+}
+
+.top-left {
+  top: 3%;
+}
+
+.bottom-left {
+  bottom: 3%;
+}
+
+.tile-screenshare > .tile-video > .stream-media > .video-participant {
+  width: 100%;
+  object-fit: contain;
+}
+
+.tiles-screenshare {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #FBFBFB;
+}
+
+.tile-screenshare {
+  display: flex;
+  flex: 1;
+}
+
+.tile-screenshare > .tile-video {
+    margin: auto;
+}
+
+.tile-current-screenshare {
+  position: absolute;
+  top: 0;
+  bottom: 0px;
+  left: 0;
+  right: 0;
+}
+
+.screenshare-participant-bar {
+  border-top: 1px solid #ccc;
+  display: flex;
+  position:absolute;
+  bottom:0;
+  height: 100px;
+  z-index: 100;
+  left: 0;
+  right: 0;
+}
+
+
+
+
+/* TILES */
+
+/* ONE PARTICIPANT (current) */
+.conference-empty {
+  visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  color: #fff;
+}
+
+/* CONTAINER TILES */
+.tiles-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #FBFBFB;
+}
+
+/* TWO PARTICIPANTS (including current) */
+.tiles-list-1 {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+/* THREE PARTICIPANTS (including current) */
+.tiles-list-2 {
+  display: flex;
+  flex:1;
+}
+
+.tiles-list-2 > .tile-item {
+  width: 50%;
+}
+
+/* FOUR PARTICIPANTS (including current) */
+.tiles-list-3 > .tile-0 {
+  height: 50%;
+  width: 50%;
+  float: left;
+}
+
+.tiles-list-3 > .tile-0 > .tile-video > .stream-media > .video-participant {
+  right: 0;
+  position: absolute;
+}
+
+.tiles-list-3 > .tile-1 {
+  height: 50%;
+  width: 50%;
+  float: left;
+}
+
+.tiles-list-3 > .tile-1 > .tile-video > .stream-media > .video-participant {
+  left: 0;
+  position: absolute;
+}
+
+.tiles-list-3 > .tile-2 {
+  height: 50%;
+  width: 100%;
+  float: left;
+}
+
+/* FIVE PARTICIPANTS (including current) */
+.tiles-list-4 {
+  flex:1;
+}
+
+.tiles-list-4 > .tile-item {
+    height: 50%;
+    width: 50%;
+    float: left;
+}
+
+.tiles-list-4 > .tile-0 > .tile-video > .stream-media > .video-participant {
+  right:0;
+  position: absolute;
+}
+
+.tiles-list-4 > .tile-1 > .tile-video > .stream-media > .video-participant {
+  left:0;
+  position: absolute;
+}
+
+.tiles-list-4 > .tile-2 > .tile-video > .stream-media > .video-participant {
+  right:0;
+  position: absolute;
+}
+
+.tiles-list-4 > .tile-3 > .tile-video > .stream-media > .video-participant {
+  left:0;
+  position: absolute;
+}
+
+/* SIX PARTICIPANTS (including current) */
+.tiles-list-5 > .tile-0 {
+  height: 50%;
+  width: calc(100% / 3);
+  float: left;
+}
+
+.tiles-list-5 > .tile-1 {
+  height: 50%;
+  width: calc(100% / 3);
+  float: left;
+}
+
+.tiles-list-5 > .tile-2 {
+  height: 50%;
+  width: calc(100% / 3);
+  float: left;
+}
+
+.tiles-list-5 > .tile-3 {
+  height: 50%;
+  width: calc(100% / 2);
+  float: left;
+}
+
+.tiles-list-5 > .tile-4 {
+  height: 50%;
+  width: calc(100% / 2);
+  float: left;
+}
+
+.tiles-list-5 > .tile-0 > .tile-video > .stream-media > .video-participant {
+  position:absolute;
+  right:0;
+  width:100%;
+}
+
+.tiles-list-5 > .tile-1 > .tile-video > .stream-media > .video-participant {
+  position:absolute;
+  width:100%;
+}
+
+.tiles-list-5 > .tile-2 > .tile-video > .stream-media > .video-participant {
+  position:absolute;
+  left:0;
+  width:100%;
+}
+
+.tiles-list-5 > .tile-3 > .tile-video > .stream-media > .video-participant {
+  right:0;
+  position: absolute;
+}
+
+.tiles-list-5 > .tile-4 > .tile-video > .stream-media > .video-participant {
+  left:0;
+  position: absolute;
+}
+
+/* SEVEN PARTICIPANTS (including current) */
+.tiles-list-6 {
+  flex:1;
+}
+
+.tiles-list-6 > * > .tile-video > .stream-media > .video-participant {
+  width:100%;
+}
+
+.tiles-list-6 > .tile-item {
+  height: 50%;
+  width: calc(100% / 3);
+  float: left;
+}
+
+/* TILES VIDEO */
+.stream-media {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #FBFBFB;
+  position: relative;
+}
+
+.video-participant {
+  object-fit: contain;
+  height: 100%;
+  float: right;
+}
+
+.video-participant-pip {
+  object-fit: cover;
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+}
+
+/* TILES LEGEND */
+.tile-legend {
+  color: #000;
+  margin-top: 5px;
+  position: absolute;
+  background-color: rgba(255,255,255,0.4);
+  padding: 10px;
+  border-radius: 3px;
+  bottom: 5%;
+  z-index: 100;
+}
+
+
+/* VU METER AVATAR (no video) */
+.avatar-vumeter-active {
+  box-shadow: 0px 0px 0px 3px #fabe04;
+}
+
+.container-avatar-vumeter {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.avatar-vumeter-name {
+  display: inline-block;
+  position: absolute;
+  margin-left: 5px;
+}
+
+.avatar-vumeter {
+  box-sizing:border-box;
+  border-radius:50%;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  display: inline-block;
+  user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+
+/* WAVE ANIMATION */
+.wave {
+  opacity: .4;
+  position: absolute;
+  left: 50%;
+  background: #72A1F3;
+  width: 300px;
+  height: 300px;
+  margin-left: -150px;
+  transform-origin: 50% 48%;
+  border-radius: 43%;
+  animation: drift 3000ms infinite linear;
+}
+
+.wave.-three {
+  animation: drift 5000ms infinite linear;
+}
+
+.wave.-two {
+  animation: drift 7000ms infinite linear;
+  opacity: .1;
+  background: #000938;
+}
+
+.box:after {
+  content: '';
+  display: block;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(#e8a, 1), rgba(#def, 0) 80%, rgba(white, .5));
+  z-index: 11;
+  transform: translate3d(0, 0, 0);
+}
+
+.title {
+  z-index: 100;
+  font-size: 18px;
+  font-weight: 300;
+  opacity: 0.6;
+}
+
+/* STREAM MODE */
+.focus {
+  width: 85%;
+  height: 100%;
+  float:right;
+}
+
+.left-panel {
+  width: 15%;
+  float:left;
+}
+
+.tile-current-screenshare {
+}
+
+.tile-screenshare-stream-mode > .tile-video > .stream-media > .video-participant {
+  object-fit: contain;
+  height: 100%;
+  float: right;
+  width: 100%;
+}
+
+.tile-screenshare-stream-mode > .video-pip {
+  right: 20px;
+  left: auto!important;
+}
+
+.tile-item-stream {
+  width: 100%;
+  height: calc(100% / 6);
+}
+
+@keyframes drift {
+  from { transform: rotate(0deg); }
+  from { transform: rotate(360deg); }
+}
