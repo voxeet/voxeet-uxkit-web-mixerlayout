@@ -18,45 +18,45 @@ This layout is used by the Voxeet Mixer to record a conference. You can customis
 
 1. Some inputs are needed by our system to works. When you edit your layout, inside the file : ConferenceRoom.js, there is some inputs that our system will fill to start the recording.
 
-```
-<input type="hidden" value="accessToken" id="accessToken" name="accessToken"/>
-<input type="hidden" value="refreshToken" id="refreshToken" name="refreshToken"/>
-<input type="hidden" value="voxeet" id="conferenceId" name="conferenceId"/>
-<input type="hidden" value="refreshUrl" id="refreshUrl" name="refreshUrl"/>
-<input type="hidden" value="1234" id="thirdPartyId" name="thirdPartyId"/>
-<input type="hidden" value="stream" id="layoutType" name="layoutType"/>
-<button id="joinConference" onClick={this.launchConference.bind(this)}>Join conference</button>
-<button id="replayConference" onClick={this.launchReplayConference.bind(this)}>Replay conference</button>
-```
+  ```
+  <input type="hidden" value="accessToken" id="accessToken" name="accessToken"/>
+  <input type="hidden" value="refreshToken" id="refreshToken" name="refreshToken"/>
+  <input type="hidden" value="voxeet" id="conferenceId" name="conferenceId"/>
+  <input type="hidden" value="refreshUrl" id="refreshUrl" name="refreshUrl"/>
+  <input type="hidden" value="1234" id="thirdPartyId" name="thirdPartyId"/>
+  <input type="hidden" value="stream" id="layoutType" name="layoutType"/>
+  <button id="joinConference" onClick={this.launchConference.bind(this)}>Join conference</button>
+  <button id="replayConference" onClick={this.launchReplayConference.bind(this)}>Replay conference</button>
+  ```
 
-You can just leave them blank; our system will fill informations to make this work properly.
+  You can just leave them blank; our system will fill informations to make this work properly.
 
-Our system is going to trigger the button join or replay (depending if it's a replay or a live conference)
+  Our system is going to trigger the button join or replay (depending if it's a replay or a live conference)
 
-After that the layout is going to join or replay the conference and the mixer is going to record the entire conference.
+  After that the layout is going to join or replay the conference and the mixer is going to record the entire conference.
 
 2. Our system need to know when the conference is over. For that, you have to keep this :
 
-```<div id="conferenceEndedVoxeet"></div>``` => Is render when the conference is over
+  ```<div id="conferenceEndedVoxeet"></div>``` => Is render when the conference is over
 
-```<div id="conferenceStartedVoxeet"></div>``` => Is render when the conference begin
+  ```<div id="conferenceStartedVoxeet"></div>``` => Is render when the conference begin
 
-Our mixer is going to detect if the ```conferenceStartedVoxeet``` exist and will begin the record.
-Same thing for the conferenceEndedVoxeet, this will stop the recording.
+  Our mixer is going to detect if the ```conferenceStartedVoxeet``` exist and will begin the record.
+  Same thing for the conferenceEndedVoxeet, this will stop the recording.
 
-If you want an example, please refer to the ConferenceRoom.js.
+  If you want an example, please refer to the ConferenceRoom.js.
 
-If you forgot to put this div inside your layout, the mixer will not work properly.
+  If you forgot to put this div inside your layout, the mixer will not work properly.
 
 3. You can specify a different layout depending on the situation.
 
-For example, for a live record, our system will fill the input with id ```layoutType``` to : ```record``` and inside your layout you can do a particular layout for this situation
+  For example, for a live record, our system will fill the input with id ```layoutType``` to : ```record``` and inside your layout you can do a particular layout for this situation
 
-Values possible are :
-- record => For live recording conference
-- replay => For replay a conference
-- stream => Stream on Youtube or Facebook
-- hls => HLS Streaming
+  Values possible are :
+  - record => For live recording conference
+  - replay => For replay a conference
+  - stream => Stream on Youtube or Facebook
+  - hls => HLS Streaming
 
 ## Project setup
 
