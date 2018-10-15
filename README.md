@@ -30,9 +30,7 @@ This layout is used by the Voxeet Mixer to record a conference. You can customis
   ```
 
   You can just leave them blank; our system will fill informations to make this work properly.
-
   Our system is going to trigger the button join or replay (depending if it's a replay or a live conference)
-
   After that the layout is going to join or replay the conference and the mixer is going to record the entire conference.
 
 2. Our system need to know when the conference is over. For that, you have to keep this :
