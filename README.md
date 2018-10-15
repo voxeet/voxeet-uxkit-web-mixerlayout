@@ -11,6 +11,9 @@ Voxeet Layout Mixer
   1. [Concept](#concet)
   2. [Project setup](#project-setup)
   3. [Customise](#customise)
+  4. [Generate Bundle](#generate-bundle)
+  5. [Host and deploy](#host-and-deploy)
+  6. [Tech](#tech)
 
 ## Concept
 
@@ -105,7 +108,22 @@ And style inside :
   - ```ParticipantWaitingActions.js/ParticipantWaitingReducer.js``` => This action is for 'waiting' participant, when an users is not yet connected or is a listener. We will not add it like a participant (ParticipantActions, to prevent a useless re-render)
 
 
+## Generate Bundle
+
+```yarn run build```
+
+This command will generate a bundle js of your project.
+
+## Host and deploy
+
+To make the layout works with our mixer, you will need to host and deploy.
 When your layout is ready to deploy, go to your account on https://developer.voxeet.com and add your Mixer layout url inside the input associated.
 
+## Tech
+
+  * [Voxeet Web SDK](https://www.npmjs.com/package/@voxeet/voxeet-web-sdk) - The WEB SDK Voxeet to communicate with Voxeet Servers
+  * [ReactJS](https://reactjs.org/) - A JavaScript library for building user interfaces
+  * [Redux](https://redux.js.org/) - Redux is a predictable state container for JavaScript apps.
+  * [Webpack](https://webpack.js.org/) - Bundle your project
 
 © Voxeet, 2018
