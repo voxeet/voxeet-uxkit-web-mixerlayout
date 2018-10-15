@@ -27,7 +27,7 @@ There is also the styles inside :
 
 - styles/css/index.css
 
-## Customise the Sample
+## Customise
 
 - Components
 
