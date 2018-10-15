@@ -2,8 +2,13 @@
   "name": "voxeet-mix-layout",
   "version": "1.1.6",
   "private": true,
+  "scripts": {
+    "start": "webpack-dev-server -d --hot --inline --history-api-fallback --content-base ./src/static",
+    "build": "webpack --config webpack.config.prod.js --progress -p",
+    "prepublishOnly": "npm run build"
+  },
   "dependencies": {
-    "@voxeet/voxeet-web-sdk": "^1.7.14",
+    "@voxeet/voxeet-web-sdk": "^1.8.0",
     "axios": "^0.18.0",
     "express": "^4.0.0",
     "react": "^16.4.1",
@@ -38,8 +43,5 @@
   "peerDependencies": {
     "@voxeet/voxeet-web-sdk": "^1.7.10",
     "express": "^4.0.0"
-  },
-  "scripts": {
-    "start": "webpack-dev-server -d"
   }
 }
