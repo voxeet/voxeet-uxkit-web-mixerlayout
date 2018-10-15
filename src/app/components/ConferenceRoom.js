@@ -33,6 +33,17 @@ class ConferenceRoom extends Component {
   }
 
   launchConference() {
+
+    /* FOR DEBUG !
+    const constraints = {
+      video: false,
+      audio:false
+    }
+    const userInfo = {user: {type: 'mixer'}}
+    const initialized = this.props.dispatch(ConferenceActions.initialize("consumerKey", "consumerSecret", { name: "Mixer", externalId: 'Mixer_' }))
+    initialized.then(() => this.props.dispatch(ConferenceActions.join("conference_name", constraints, userInfo)).then(() => this.setState({ isLaunch: true })))
+    */
+
     const accessToken = document.getElementById("accessToken").value
     const refreshToken = document.getElementById("refreshToken").value
     const refreshUrl = document.getElementById("refreshUrl").value
@@ -56,6 +67,10 @@ class ConferenceRoom extends Component {
     const thirdPartyId = document.getElementById("thirdPartyId").value
     const layoutType = document.getElementById("layoutType").value
     const userInfo = {user: {type: 'user'}}
+    /* FOR DEBUG
+    const initialized = this.props.dispatch(ConferenceActions.initialize("consumerKey", "consumerSecret", { name: "Mixer", externalId: 'Mixer_' }))
+    initialized.then(() => this.props.dispatch(ConferenceActions.replay("conferenceIdToReplay", 0, userInfo)).then(() => this.setState({ isLaunch: true, layoutType: layoutType })))
+    */
     const initialized = this.props.dispatch(ConferenceActions.initializeWithToken(accessToken, { name: "Mixer", externalId: 'Mixer_' + layoutType, thirdPartyId: thirdPartyId }, refreshToken, refreshUrl))
     initialized.then(() => this.props.dispatch(ConferenceActions.replay(conferenceId, 0, userInfo)).then(() => this.setState({ isLaunch: true, layoutType: layoutType })))
   }
