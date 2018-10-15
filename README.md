@@ -14,7 +14,7 @@ Voxeet Layout Mixer
 ## Project setup
 
  - Download
- - yarn i
+ - ```javascript yarn i```
  - yarn start
 
 This Voxeet Mixer Layout use React with Redux. This means that the repository is composed by :
