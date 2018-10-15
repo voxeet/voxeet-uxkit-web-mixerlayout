@@ -62,5 +62,5 @@ And style inside :
 
 When your layout is ready to deploy, go to your account on https://developer.voxeet.com and add your Mixer layout url inside the input associated.
 
-  -
+
 © Voxeet, 2018
