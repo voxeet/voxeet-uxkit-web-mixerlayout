@@ -23,7 +23,7 @@ This Voxeet Mixer Layout use React with Redux. This means that the repository is
 - Reducers
 - Components
 
-There is also the styles inside :
+And style inside :
 
 - ```styles/css/index.css```
 
