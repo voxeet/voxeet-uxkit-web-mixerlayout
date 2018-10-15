@@ -50,7 +50,7 @@ There is also the styles inside :
   This file is use for a classic conference with presenters (depending on the number of participant). The layout will re-render when a new presenter will join the conference.
 
     - ```TileVideo.js``` => This tile is used to determine if an user have turned on this camera or not (Called the associated component)
-    - ```AttendeesParticipantVideo.jsv => This component is used when a presenter have his camera turned on (Called from TileVideo.js)
+    - ```AttendeesParticipantVideo.js``` => This component is used when a presenter have his camera turned on (Called from TileVideo.js)
     - ```AttendeesParticipantVuMeter.js``` => This components is used when a presenter does not have the camera turned on, this will draw the avatar (Called from TileVideo.js)
 
 - Actions/Reducers
