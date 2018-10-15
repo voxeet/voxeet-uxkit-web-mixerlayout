@@ -13,7 +13,7 @@ Voxeet Layout Mixer
 
 ## Project setup
 
- - Download
+ - Download ```git clone git@github.com:voxeet/voxeet-mix-layout.git```
  - ```yarn install```
  - ```yarn start```
 
