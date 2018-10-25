@@ -329,6 +329,7 @@ body {
   object-fit: contain;
   height: 100%;
   float: right;
+  max-width: 100%;
 }
 
 .video-participant-pip {
