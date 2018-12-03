@@ -21,6 +21,9 @@ ReactDOM.render(
   <Provider store={configureStore()}>
     <div>
       <ConferenceRoom
+        //isDemo
+        //consumerKey={"CONSUMER_KEY"}
+        //consumerSecret={"CONSUMER_SECRET"}
       />
     </div>
   </Provider>,

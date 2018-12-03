@@ -32,18 +32,27 @@ class ConferenceRoom extends Component {
     Sdk.create()
   }
 
-  launchConference() {
-
-    /* FOR DEBUG !
+  launchConferenceTest() {
+    const layoutType = document.getElementById("select-layout-test").value
+    const conferenceNameTest = document.getElementById("conferenceNameTest").value
+    const userInfo = {user: {type: 'mixer'}}
     const constraints = {
       video: false,
       audio:false
     }
-    const userInfo = {user: {type: 'mixer'}}
-    const initialized = this.props.dispatch(ConferenceActions.initialize("consumerKey", "consumerSecret", { name: "Mixer", externalId: 'Mixer_' }))
-    initialized.then(() => this.props.dispatch(ConferenceActions.join("conference_name", constraints, userInfo)).then(() => this.setState({ isLaunch: true })))
-    */
+    const initialized = this.props.dispatch(ConferenceActions.initialize(this.props.consumerKey, this.props.consumerSecret, { name: "Mixer", externalId: 'Mixer_' }))
+    initialized.then(() => this.props.dispatch(ConferenceActions.join(conferenceNameTest, constraints, userInfo)).then(() => this.setState({ isLaunch: true, layoutType: layoutType })))
+  }
 
+  launchReplayConferenceTest() {
+    const layoutType = document.getElementById("select-layout-test").value
+    const conferenceIdTest = document.getElementById("conferenceIdTest").value
+    const userInfo = {user: {type: 'user'}}
+    const initialized = this.props.dispatch(ConferenceActions.initialize(this.props.consumerKey, this.props.consumerSecret, { name: "Mixer", externalId: 'Mixer_' }))
+    initialized.then(() => this.props.dispatch(ConferenceActions.replay(conferenceIdTest, 0, userInfo)).then(() => this.setState({ isLaunch: true, layoutType: layoutType })))
+  }
+
+  launchConference() {
     const accessToken = document.getElementById("accessToken").value
     const refreshToken = document.getElementById("refreshToken").value
     const refreshUrl = document.getElementById("refreshUrl").value
@@ -67,10 +76,6 @@ class ConferenceRoom extends Component {
     const thirdPartyId = document.getElementById("thirdPartyId").value
     const layoutType = document.getElementById("layoutType").value
     const userInfo = {user: {type: 'user'}}
-    /* FOR DEBUG
-    const initialized = this.props.dispatch(ConferenceActions.initialize("consumerKey", "consumerSecret", { name: "Mixer", externalId: 'Mixer_' }))
-    initialized.then(() => this.props.dispatch(ConferenceActions.replay("conferenceIdToReplay", 0, userInfo)).then(() => this.setState({ isLaunch: true, layoutType: layoutType })))
-    */
     const initialized = this.props.dispatch(ConferenceActions.initializeWithToken(accessToken, { name: "Mixer", externalId: 'Mixer_' + layoutType, thirdPartyId: thirdPartyId }, refreshToken, refreshUrl))
     initialized.then(() => this.props.dispatch(ConferenceActions.replay(conferenceId, 0, userInfo)).then(() => this.setState({ isLaunch: true, layoutType: layoutType })))
   }
@@ -84,6 +89,7 @@ class ConferenceRoom extends Component {
 
   render() {
     const { participants } = this.props.participantsStore
+    const { isDemo, consumerKey, consumerSecret } = this.props
     const { screenShareMode, conferenceEnded, filePresentationMode, videoPresentationMode } = this.props.conferenceStore
     const { isLaunch, layoutType } = this.state
     let count = -1;
@@ -94,30 +100,83 @@ class ConferenceRoom extends Component {
     }
     return (
       <div>
+      { isDemo && !isLaunch &&
+        <div>
+          <div className="container-test">
+            <h1>Voxeet Layout Testing</h1>
+            { (consumerKey == null || consumerKey == null) &&
+              <div className="keys-missing-test">Missing consumerKey / consumerSecret inside index.js</div>
+            }
+            <div>
+              <h3>Layout type</h3>
+              <select id="select-layout-test" className="select-layout-test">
+                <option value="record">Recording layout</option>
+                <option value="replay">Replay layout</option>
+                <option value="stream">Stream layout</option>
+                <option value="hls">HLS layout</option>
+              </select>
+            </div>
+            <div>
+              <h3>Live conference</h3>
+              <input placeholder="Conference name" id="conferenceNameTest" name="conferenceNameTest"/>
+              <button id="joinConferenceTest" onClick={this.launchConferenceTest.bind(this)}>Join conference</button>
+            </div>
+            <div>
+              <h3>Replay conference</h3>
+              <input placeholder="Conference Id Replay" id="conferenceIdTest" name="conferenceIdTest"/>
+              <button id="replayConferenceTest" onClick={this.launchReplayConferenceTest.bind(this)}>Replay conference</button>
+            </div>
+          </div>
+        </div>
+      }
       { !isLaunch && conferenceEnded &&
         <div className="conference-ended-picto">
             <div id="conferenceEndedVoxeet"></div>
         </div>
       }
       { isLaunch ?
-        conferenceEnded ?
-          <div className="conference-ended-picto">
-              <div id="conferenceEndedVoxeet"></div>
-          </div>
-        :
-        (screenShareMode || filePresentationMode || videoPresentationMode) ?
+          conferenceEnded ?
+            <div className="conference-ended-picto">
+                <div id="conferenceEndedVoxeet"></div>
+            </div>
+          :
+          (screenShareMode || filePresentationMode || videoPresentationMode) ?
+                <div className="tiles-container" data-number-user={participantConnected.length}>
+                    <div id="conferenceStartedVoxeet"></div>
+                    <div>
+                      {
+                        participantConnected.map((participant, i) => {
+                          if ((participant.screenShare || participant.filePresentation) && participant.stream != null && participant.isConnected) {
+                            return (<TileVideoPiP key={i} layoutType={layoutType} stream={participant.stream} />)
+                          }
+                        })
+                      }
+                      { participantConnected.length > 0 ?
+                          <ScreenShareMode screenShareMode={screenShareMode} filePresentationMode={filePresentationMode} videoPresentationMode={videoPresentationMode} participants={participants} />
+                      :
+                        <div className="conference-empty">
+                          <div className='wave -one'></div>
+                          <div className='wave -two'></div>
+                          <div className='wave -three'></div>
+                          <div className='title'>Waiting for other participants...</div>
+                        </div>
+                      }
+                    </div>
+                    <div className="hangup-button">
+                      <button
+                        onClick={this.hangup.bind(this)}
+                      ><img src={hangUp} /></button>
+                    </div>
+                </div>
+          :
               <div className="tiles-container" data-number-user={participantConnected.length}>
                   <div id="conferenceStartedVoxeet"></div>
-                  <div>
-                    {
-                      participantConnected.map((participant, i) => {
-                        if ((participant.screenShare || participant.filePresentation) && participant.stream != null && participant.isConnected) {
-                          return (<TileVideoPiP key={i} layoutType={layoutType} stream={participant.stream} />)
-                        }
-                      })
-                    }
+                  <div id="tile-list" className={className}>
                     { participantConnected.length > 0 ?
-                        <ScreenShareMode screenShareMode={screenShareMode} filePresentationMode={filePresentationMode} videoPresentationMode={videoPresentationMode} participants={participants} />
+                      participantConnected.map((participant, i) => {
+                          count = count + 1;
+                          return (<Tile key={i} nbParticipant={count} participant={participant} />)
+                      })
                     :
                       <div className="conference-empty">
                         <div className='wave -one'></div>
@@ -127,36 +186,14 @@ class ConferenceRoom extends Component {
                       </div>
                     }
                   </div>
-                  <div className="hangup-button">
-                    <button
-                      onClick={this.hangup.bind(this)}
-                    ><img src={hangUp} /></button>
-                  </div>
-              </div>
-        :
-            <div className="tiles-container" data-number-user={participantConnected.length}>
-                <div id="conferenceStartedVoxeet"></div>
-                <div id="tile-list" className={className}>
-                  { participantConnected.length > 0 ?
-                    participantConnected.map((participant, i) => {
-                        count = count + 1;
-                        return (<Tile key={i} nbParticipant={count} participant={participant} />)
-                    })
-                  :
-                    <div className="conference-empty">
-                      <div className='wave -one'></div>
-                      <div className='wave -two'></div>
-                      <div className='wave -three'></div>
-                      <div className='title'>Waiting for other participants...</div>
+                  { isDemo &&
+                    <div className="hangup-button">
+                      <button
+                        onClick={this.hangup.bind(this)}
+                      ><img src={hangUp} /></button>
                     </div>
                   }
-                </div>
-                <div className="hangup-button">
-                  <button
-                    onClick={this.hangup.bind(this)}
-                  ><img src={hangUp} /></button>
-                </div>
-            </div>
+              </div>
         :
             <div>
               <input type="hidden" value="accessToken" id="accessToken" name="accessToken"/>
@@ -173,5 +210,17 @@ class ConferenceRoom extends Component {
     )
   }
 }
+
+
+ConferenceRoom.propTypes = {
+  isDemo: PropTypes.bool,
+  consumerKey: PropTypes.string,
+  consumerSecret: PropTypes.string
+}
+
+ConferenceRoom.defaultProps = {
+  isDemo: false
+}
+
 
 export default ConferenceRoom;

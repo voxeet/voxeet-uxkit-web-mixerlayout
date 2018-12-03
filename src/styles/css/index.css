@@ -13,7 +13,6 @@ body {
   top: 0;
   text-align: center;
   padding: 15px;
-  visibility: hidden;
 }
 
 .hangup-button button {
@@ -36,10 +35,81 @@ body {
 
 /* END GENERAL */
 
-/* HIDDEN INPUTS */
-#joinConference, #replayConference {
-  //display: none;
+/* TEST */
+
+.keys-missing-test {
+  width: 100%;
+  padding: 8px;
+  background-color: #dc3545;
+  text-align: center;
+  font-size: 13px;
+  color: #fff;
+  border-radius: 5px;
+  font-weight: 800;
 }
+
+.container-test {
+  max-width: 35%;
+  margin: auto;
+  background-color: #000c31;
+  border-radius: 8px;
+  padding: 30px;
+  margin-top: 50vh;
+  transform: translateY(-50%);
+}
+
+.container-test select {
+  width: 99%;
+}
+
+.container-test select option {
+  padding: 5px;
+}
+
+.container-test input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 8px;
+  border-radius: 5px;
+  font-size: 14px;
+  line-height: 14px;
+  border: none;
+}
+
+.container-test button {
+  padding: 10px 50px;
+  background-image: linear-gradient(225deg, #f8cc52 0%, #f19148 100%);
+  background-repeat: repeat-y;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 14px;
+  border: none!important;
+  font-weight: 600;
+  width: 100%;
+  cursor: pointer;
+}
+
+.container-test h1 {
+  font-size: 22px;
+  color: #fff;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.container-test h3 {
+  color: #fff;
+  font-size: 18px;
+}
+
+/* END TEST */
+
+/* HIDDEN */
+
+#joinConference, #replayConference{
+  display: none;
+}
+
+/* END HIDDEN */
 
 
 /* CONFERENCE ENDED PICTO */
