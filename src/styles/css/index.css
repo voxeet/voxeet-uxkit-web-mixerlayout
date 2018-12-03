@@ -96,6 +96,7 @@ body {
 .tile-screenshare > .tile-video > .stream-media > .video-participant {
   width: 100%;
   object-fit: contain;
+  max-width: 100%;
 }
 
 .tiles-screenshare {
@@ -328,6 +329,7 @@ body {
   object-fit: contain;
   height: 100%;
   float: right;
+  max-width: 100%;
 }
 
 .video-participant-pip {
