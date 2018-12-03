@@ -75,6 +75,12 @@ And style inside :
 
 - ```styles/css/index.css```
 
+## Test
+
+There is a way to test your layout immediately. Inside the ```index.js``` file you will find the ```ConferenceRoom```. You need to enable the test mode. (Don't forget to put your own consumerKey and consumerSecret)
+
+! Don't forget to disable the testing mode before pushing in production !
+
 ## Customise
 
 - Components
