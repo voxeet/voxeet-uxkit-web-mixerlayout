@@ -247,6 +247,10 @@ body {
   flex:1;
 }
 
+.tile-item {
+  overflow: hidden;
+}
+
 .tiles-list-2 > .tile-item {
   width: 50%;
 }
