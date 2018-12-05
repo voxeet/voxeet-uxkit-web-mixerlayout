@@ -209,7 +209,7 @@ export class Actions {
 
             Sdk.instance.on('conferenceLeft', () => {
                 console.log("CONFERENCE LEFT");
-
+                dispatch(this._conferenceEnded())
             })
 
             Sdk.instance.on('conferenceEnded', () => {
@@ -223,34 +223,33 @@ export class Actions {
            });
 
            Sdk.instance.recording.on('stopped', () => {
-            console.log("RECORDING STOPPED");
-              dispatch(this._conferenceEnded())
+                console.log("RECORDING STOPPED");
            });
 
             Sdk.instance.videoPresentation.on('stopped', (data) => {
                 console.log("VIDEO PRESENTATION STOPPED");
-              dispatch(this.stopVideoPresentationMode())
-              dispatch(ParticipantActions.onParticipantStopVideoPresentation())
+                dispatch(this.stopVideoPresentationMode())
+                dispatch(ParticipantActions.onParticipantStopVideoPresentation())
             });
 
             Sdk.instance.videoPresentation.on('play', (data) => {
                 console.log("VIDEO PRESENTATION PLAY: " + data.timestamp);
-              var videoPresentation = document.getElementById('video-file-presentation');
-              videoPresentation.currentTime = (data.timestamp / 1000);
-              videoPresentation.play();
+                var videoPresentation = document.getElementById('video-file-presentation');
+                videoPresentation.currentTime = (data.timestamp / 1000);
+                videoPresentation.play();
             });
 
             Sdk.instance.videoPresentation.on('pause', (data) => {
                 console.log("VIDEO PRESENTATION PAUSE: " + data.timestamp);
-              var videoPresentation = document.getElementById('video-file-presentation');
-              videoPresentation.currentTime = (data.timestamp / 1000);
-              videoPresentation.pause();
+                var videoPresentation = document.getElementById('video-file-presentation');
+                videoPresentation.currentTime = (data.timestamp / 1000);
+                videoPresentation.pause();
             });
 
             Sdk.instance.videoPresentation.on('seek', (data) => {
                 console.log("VIDEO PRESENTATION SEEK: " + data.timestamp);
-              var videoPresentation = document.getElementById('video-file-presentation');
-              videoPresentation.currentTime = (data.timestamp / 1000);
+                var videoPresentation = document.getElementById('video-file-presentation');
+                videoPresentation.currentTime = (data.timestamp / 1000);
             });
 
             Sdk.instance.on('participantJoined', (userId, stream) => {
@@ -260,7 +259,7 @@ export class Actions {
 
             Sdk.instance.on('participantUpdated', (userId, stream) => {
                 console.log("PARTICIPANT UPDATED: " + userId);
-              dispatch(this.checkIfUpdateUser(userId, stream))
+                dispatch(this.checkIfUpdateUser(userId, stream))
                 //dispatch(ParticipantActions.onParticipantUpdated(userId, stream))
             })
 
@@ -289,18 +288,18 @@ export class Actions {
 
             Sdk.instance.on('filePresentationStarted', (data) => {
                 console.log("FILE PRESENTATION STARTED: " + data.userId);
-              dispatch(this.checkIfUserExistFilePresentationStart(data.userId, data))
+                dispatch(this.checkIfUserExistFilePresentationStart(data.userId, data))
             })
 
             Sdk.instance.on('filePresentationUpdated', (data) => {
                 console.log("FILE PRESENTATION UPDATED: " + data.userId);
-              dispatch(this.checkIfUserExistFilePresentationUpdated(data.userId, data))
+                dispatch(this.checkIfUserExistFilePresentationUpdated(data.userId, data))
             })
 
             Sdk.instance.on('filePresentationStopped', () => {
                 console.log("FILE PRESENTATION STOPPED");
-              dispatch(this.stopFilePresentationMode())
-              dispatch(ParticipantActions.onParticipantStopFilePresentation())
+                dispatch(this.stopFilePresentationMode())
+                dispatch(ParticipantActions.onParticipantStopFilePresentation())
             })
 
             resolve();
