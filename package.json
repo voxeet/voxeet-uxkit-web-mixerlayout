@@ -8,14 +8,14 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "@voxeet/voxeet-web-sdk": "^1.8.0",
+    "@voxeet/voxeet-web-sdk": "^1.8.6",
     "axios": "^0.18.0",
     "express": "^4.0.0",
-    "react": "^16.4.1",
-    "react-dom": "^16.4.1",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
     "react-redux": "^5.0.7",
     "react-scripts": "1.1.4",
-    "redux": "^4.0.0",
+    "redux": "^3.7.2",
     "redux-promise": "^0.6.0",
     "redux-thunk": "^2.3.0"
   },
