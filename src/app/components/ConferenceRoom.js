@@ -95,7 +95,7 @@ class ConferenceRoom extends Component {
     let count = -1;
     let participantConnected = participants.filter(p => p.isConnected)
     let className = "tiles-list"
-    if (participantConnected.length <= 6) {
+    if (participantConnected.length <= 15) {
       className += "-" + participantConnected.length
     }
     return (
