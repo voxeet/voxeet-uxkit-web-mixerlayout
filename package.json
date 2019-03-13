@@ -1,6 +1,6 @@
 {
   "name": "voxeet-mix-layout",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "private": true,
   "scripts": {
     "start": "webpack-dev-server -d --hot --inline --history-api-fallback --content-base ./src/static",
@@ -8,7 +8,7 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "@voxeet/voxeet-web-sdk": "^1.8.6",
+    "@voxeet/voxeet-web-sdk": "^1.9.0-alpha.16",
     "axios": "^0.18.0",
     "express": "^4.0.0",
     "react": "^16.7.0",
