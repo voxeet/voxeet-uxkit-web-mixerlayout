@@ -1,13 +1,18 @@
 /* GENERAL */
 
 body {
-  background-color: #FBFBFB;
-  font-family: Open Sans,sans-serif;
-  from { transform: rotate(0deg); }
-  from { transform: rotate(360deg); }
+  background-color: #fbfbfb;
+  font-family: Open Sans, sans-serif;
+  from {
+    transform: rotate(0deg);
+  }
+  from {
+    transform: rotate(360deg);
+  }
 }
 
 .hangup-button {
+  display: none !important;
   position: absolute;
   right: 0;
   top: 0;
@@ -16,7 +21,7 @@ body {
 }
 
 .hangup-button button {
-  background-color: rgba(0,0,0,0.6);
+  background-color: rgba(0, 0, 0, 0.6);
   width: 45px;
   height: 45px;
   cursor: pointer;
@@ -30,7 +35,6 @@ body {
 }
 
 .hangup-button button:hover {
-
 }
 
 /* END GENERAL */
@@ -83,7 +87,7 @@ body {
   border-radius: 4px;
   color: #fff;
   font-size: 14px;
-  border: none!important;
+  border: none !important;
   font-weight: 600;
   width: 100%;
   cursor: pointer;
@@ -105,28 +109,28 @@ body {
 
 /* HIDDEN */
 
-#joinConference, #replayConference{
+#joinConference,
+#replayConference {
   display: none;
 }
 
 /* END HIDDEN */
 
-
 /* CONFERENCE ENDED PICTO */
 .conference-ended-picto {
-    text-align: center;
+  text-align: center;
 }
 
 .conference-ended-picto img {
-    position:absolute;
-    top:0;
-    bottom:0;
-    margin:auto;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto;
 }
 
 /* FILE PRESENTATION MODE */
 .tile-presentation {
-    margin: auto;
+  margin: auto;
 }
 
 .tile-presentation img {
@@ -135,24 +139,23 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #FBFBFB;
+  background-color: #fbfbfb;
   position: relative;
   object-fit: contain;
 }
 
-
 /* SCREENSHARE MODE */
 
 .video-pip {
-    position: absolute;
-    left: 20px;
-    width: 150px;
-    height: 150px;
-    z-index:100;
+  position: absolute;
+  left: 20px;
+  width: 150px;
+  height: 150px;
+  z-index: 100;
+  background-color: transparent;
+  video {
     background-color: transparent;
-    video {
-      background-color: transparent;
-    }
+  }
 }
 
 .top-left {
@@ -175,7 +178,7 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: #FBFBFB;
+  background-color: #fbfbfb;
 }
 
 .tile-screenshare {
@@ -184,7 +187,7 @@ body {
 }
 
 .tile-screenshare > .tile-video {
-    margin: auto;
+  margin: auto;
 }
 
 .tile-current-screenshare {
@@ -198,16 +201,13 @@ body {
 .screenshare-participant-bar {
   border-top: 1px solid #ccc;
   display: flex;
-  position:absolute;
-  bottom:0;
+  position: absolute;
+  bottom: 0;
   height: 100px;
   z-index: 100;
   left: 0;
   right: 0;
 }
-
-
-
 
 /* TILES */
 
@@ -229,11 +229,10 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: #FBFBFB;
+  background-color: #fbfbfb;
 }
 
-/* TWO PARTICIPANTS (including current) */
-.tiles-list-1 {
+#tile-list {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -241,10 +240,21 @@ body {
   right: 0;
 }
 
+/* TWO PARTICIPANTS (including current) */
+.tiles-list-1 {
+  display: flex;
+  flex: 1;
+  width: 100%;
+}
+
+.tiles-list-1 > .tile-item {
+  width: 100%;
+}
+
 /* THREE PARTICIPANTS (including current) */
 .tiles-list-2 {
   display: flex;
-  flex:1;
+  flex: 1;
 }
 
 .tile-item {
@@ -286,32 +296,32 @@ body {
 
 /* FIVE PARTICIPANTS (including current) */
 .tiles-list-4 {
-  flex:1;
+  flex: 1;
 }
 
 .tiles-list-4 > .tile-item {
-    height: 50%;
-    width: 50%;
-    float: left;
+  height: 50%;
+  width: 50%;
+  float: left;
 }
 
 .tiles-list-4 > .tile-0 > .tile-video > .stream-media > .video-participant {
-  right:0;
+  right: 0;
   position: absolute;
 }
 
 .tiles-list-4 > .tile-1 > .tile-video > .stream-media > .video-participant {
-  left:0;
+  left: 0;
   position: absolute;
 }
 
 .tiles-list-4 > .tile-2 > .tile-video > .stream-media > .video-participant {
-  right:0;
+  right: 0;
   position: absolute;
 }
 
 .tiles-list-4 > .tile-3 > .tile-video > .stream-media > .video-participant {
-  left:0;
+  left: 0;
   position: absolute;
 }
 
@@ -347,39 +357,39 @@ body {
 }
 
 .tiles-list-5 > .tile-0 > .tile-video > .stream-media > .video-participant {
-  position:absolute;
-  right:0;
-  width:100%;
+  position: absolute;
+  right: 0;
+  width: 100%;
 }
 
 .tiles-list-5 > .tile-1 > .tile-video > .stream-media > .video-participant {
-  position:absolute;
-  width:100%;
+  position: absolute;
+  width: 100%;
 }
 
 .tiles-list-5 > .tile-2 > .tile-video > .stream-media > .video-participant {
-  position:absolute;
-  left:0;
-  width:100%;
+  position: absolute;
+  left: 0;
+  width: 100%;
 }
 
 .tiles-list-5 > .tile-3 > .tile-video > .stream-media > .video-participant {
-  right:0;
+  right: 0;
   position: absolute;
 }
 
 .tiles-list-5 > .tile-4 > .tile-video > .stream-media > .video-participant {
-  left:0;
+  left: 0;
   position: absolute;
 }
 
 /* SEVEN PARTICIPANTS (including current) */
 .tiles-list-6 {
-  flex:1;
+  flex: 1;
 }
 
 .tiles-list-6 > * > .tile-video > .stream-media > .video-participant {
-  width:100%;
+  width: 100%;
 }
 
 .tiles-list-6 > .tile-item {
@@ -433,11 +443,11 @@ body {
 
 /* EIGHT PARTICIPANTS (including current) */
 .tiles-list-8 {
-  flex:1;
+  flex: 1;
 }
 
 .tiles-list-8 > * > .tile-video > .stream-media > .video-participant {
-  width:100%;
+  width: 100%;
 }
 
 .tiles-list-8 > .tile-item {
@@ -503,11 +513,11 @@ body {
 
 /* TEN PARTICIPANTS (including current) */
 .tiles-list-10 {
-  flex:1;
+  flex: 1;
 }
 
 .tiles-list-10 > * > .tile-video > .stream-media > .video-participant {
-  width:100%;
+  width: 100%;
 }
 
 .tiles-list-10 > .tile-item {
@@ -585,11 +595,11 @@ body {
 
 /* TWELVE PARTICIPANTS (including current) */
 .tiles-list-12 {
-  flex:1;
+  flex: 1;
 }
 
 .tiles-list-12 > * > .tile-video > .stream-media > .video-participant {
-  width:100%;
+  width: 100%;
 }
 
 .tiles-list-12 > .tile-item {
@@ -679,11 +689,11 @@ body {
 
 /* FOURTEEN PARTICIPANTS (including current) */
 .tiles-list-14 {
-  flex:1;
+  flex: 1;
 }
 
 .tiles-list-14 > * > .tile-video > .stream-media > .video-participant {
-  width:100%;
+  width: 100%;
 }
 
 .tiles-list-14 > .tile-item {
@@ -783,7 +793,6 @@ body {
   float: left;
 }
 
-
 /* TILES VIDEO */
 .stream-media {
   width: 100%;
@@ -791,7 +800,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #FBFBFB;
+  background-color: #fbfbfb;
   position: relative;
 }
 
@@ -809,18 +818,24 @@ body {
   height: 100%;
 }
 
+.participant-pip img {
+  border-radius: 50%;
+  height: 150px;
+  width: 150px;
+  background-color: #000;
+}
+
 /* TILES LEGEND */
 .tile-legend {
   color: #000;
   margin-top: 5px;
   position: absolute;
-  background-color: rgba(255,255,255,0.4);
+  background-color: rgba(255, 255, 255, 0.4);
   padding: 10px;
   border-radius: 3px;
   bottom: 5%;
   z-index: 100;
 }
-
 
 /* VU METER AVATAR (no video) */
 .avatar-vumeter-active {
@@ -842,8 +857,8 @@ body {
 }
 
 .avatar-vumeter {
-  box-sizing:border-box;
-  border-radius:50%;
+  box-sizing: border-box;
+  border-radius: 50%;
   margin-right: 5px;
   margin-bottom: 5px;
   display: inline-block;
@@ -855,13 +870,12 @@ body {
   -ms-user-select: none;
 }
 
-
 /* WAVE ANIMATION */
 .wave {
-  opacity: .4;
+  opacity: 0.4;
   position: absolute;
   left: 50%;
-  background: #72A1F3;
+  background: #72a1f3;
   width: 300px;
   height: 300px;
   margin-left: -150px;
@@ -876,18 +890,23 @@ body {
 
 .wave.-two {
   animation: drift 7000ms infinite linear;
-  opacity: .1;
+  opacity: 0.1;
   background: #000938;
 }
 
 .box:after {
-  content: '';
+  content: "";
   display: block;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to bottom, rgba(#e8a, 1), rgba(#def, 0) 80%, rgba(white, .5));
+  background: linear-gradient(
+    to bottom,
+    rgba(#e8a, 1),
+    rgba(#def, 0) 80%,
+    rgba(white, 0.5)
+  );
   z-index: 11;
   transform: translate3d(0, 0, 0);
 }
@@ -903,18 +922,21 @@ body {
 .focus {
   width: 85%;
   height: 100%;
-  float:right;
+  float: right;
 }
 
 .left-panel {
   width: 15%;
-  float:left;
+  float: left;
 }
 
 .tile-current-screenshare {
 }
 
-.tile-screenshare-stream-mode > .tile-video > .stream-media > .video-participant {
+.tile-screenshare-stream-mode
+  > .tile-video
+  > .stream-media
+  > .video-participant {
   object-fit: contain;
   height: 100%;
   float: right;
@@ -923,7 +945,7 @@ body {
 
 .tile-screenshare-stream-mode > .video-pip {
   right: 20px;
-  left: auto!important;
+  left: auto !important;
 }
 
 .tile-item-stream {
@@ -932,6 +954,10 @@ body {
 }
 
 @keyframes drift {
-  from { transform: rotate(0deg); }
-  from { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  from {
+    transform: rotate(360deg);
+  }
 }
