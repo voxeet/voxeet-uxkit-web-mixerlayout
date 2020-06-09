@@ -13,7 +13,7 @@ module.exports = {
     './src/app/index.js',
   ],
   devServer: {
-    port: 8080,
+    port: 8081,
     https: true,
     disableHostCheck: true,
     host: '0.0.0.0',
