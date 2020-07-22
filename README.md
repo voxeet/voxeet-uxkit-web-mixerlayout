@@ -8,129 +8,199 @@ Voxeet Layout Mixer
 
 ## Table of contents
 
-  1. [Concept](#concet)
-  2. [Project setup](#project-setup)
-  3. [Customise](#customise)
-  4. [Generate Bundle](#generate-bundle)
-  5. [Host and deploy](#host-and-deploy)
-  6. [Tech](#tech)
+1. [Concept](#concet)
+2. [Project setup](#project-setup)
+3. [Customise](#customise)
+4. [Generate Bundle](#generate-bundle)
+5. [Host and deploy](#host-and-deploy)
+6. [Tech](#tech)
 
 ## Concept
 
-This layout is used by the Voxeet Mixer to record a conference. You can customise it but be sure to keep some important informations !
+A mixer layout app is a web app that the Dolby Interactivity APIs Platform (the Platform) can use to determine the display for a video recording of a conference.
+The resulting recording can contain the video from each participant, as well as screens, files or videos being shared, and the size and position of each is under the control of the layout app.
 
-1. Some inputs are needed by our system to works. When you edit your layout, inside the file : ConferenceRoom.js, there is some inputs that our system will fill to start the recording.
+As participants join and leave, start and stop video streams or screen, file or video sharing, the layout app is updated with these changes, allowing for a dynamic layout. 
 
-  ```
-  <input type="hidden" value="accessToken" id="accessToken" name="accessToken"/>
-  <input type="hidden" value="refreshToken" id="refreshToken" name="refreshToken"/>
-  <input type="hidden" value="voxeet" id="conferenceId" name="conferenceId"/>
-  <input type="hidden" value="refreshUrl" id="refreshUrl" name="refreshUrl"/>
-  <input type="hidden" value="1234" id="thirdPartyId" name="thirdPartyId"/>
-  <input type="hidden" value="stream" id="layoutType" name="layoutType"/>
-  <button id="joinConference" onClick={this.launchConference.bind(this)}>Join conference</button>
-  <button id="replayConference" onClick={this.launchReplayConference.bind(this)}>Replay conference</button>
-  ```
+The layout does not need to be constant and can change depending on who is talking or who is sharing a screen. For example, the layout may be equal sized tiles for the majority of the video but when a screen is being shared, the layout could change to show only that screen.
 
-  You can just leave them blank; our system will fill informations to make this work properly.
-  Our system is going to trigger the button join or replay (depending if it's a replay or a live conference)
-  After that the layout is going to join or replay the conference and the mixer is going to record the entire conference.
 
-2. Our system need to know when the conference is over. For that, you have to keep this :
+1. The Dolby Interactivity APIs Platform communicates with the layout app by filling out input fields and “clicking” buttons.
+    The input fields are used to define the details of the conference to prodce a record of.
+    When one of the buttons is clicked, the layout app takes the values in these fields to connect to the conference or the recording.
 
-  ```<div id="conferenceEndedVoxeet"></div>``` => Is render when the conference is over
+    These inputs and buttons are required and in this app they are found in the file `src/app/components/ConferenceRoom.js`. 
 
-  ```<div id="conferenceStartedVoxeet"></div>``` => Is render when the conference begin
+    ```
+    <input type="hidden" value="accessToken" id="accessToken" name="accessToken"/>
+    <input type="hidden" value="refreshToken" id="refreshToken" name="refreshToken"/>
+    <input type="hidden" value="voxeet" id="conferenceId" name="conferenceId"/>
+    <input type="hidden" value="refreshUrl" id="refreshUrl" name="refreshUrl"/>
+    <input type="hidden" value="1234" id="thirdPartyId" name="thirdPartyId"/>
+    <input type="hidden" value="stream" id="layoutType" name="layoutType"/>
+    <button id="joinConference" onClick={this.launchConference.bind(this)}>Join conference</button>
+    <button id="replayConference" onClick={this.launchReplayConference.bind(this)}>Replay conference</button>
+    ```
 
-  Our mixer is going to detect if the ```conferenceStartedVoxeet``` exist and will begin the record.
-  Same thing for the conferenceEndedVoxeet, this will stop the recording.
+    The Platform triggers either the `joinConference` button or the `replayConference` button, depending on whether the conference is live or a replay.
+    The mixer layout then uses the Dolby Interactivity APIs Web SDK to join the conferences as a mixer and creates the layout based on the participants in the conference.
 
-  If you want an example, please refer to the ConferenceRoom.js.
 
-  If you forgot to put this div inside your layout, the mixer will not work properly.
+2. The Platform needs to know when the layout has been prepared for the recording to begin and when the conference is over and recording should stop.
+    This is done by the layout app presenting `div`s with specific `id`s. The Platform looks for: 
 
-3. You can specify a different layout depending on the situation.
+    * `<div id="conferenceStartedVoxeet"></div>`. By adding this element into the DOM, the layout app indicates it is ready for the recording to begin. 
+    * `<div id="conferenceEndedVoxeet"></div>`. By adding this element into the DOM, the layout app indicates that the conference is over.
 
-  For example, for a live record, our system will fill the input with id ```layoutType``` to : ```record``` and inside your layout you can do a particular layout for this situation
+    In this layout app, these `div`s are created in `ConferenceRoom.js`.
 
-  Values possible are :
-  - record => For live recording conference
-  - replay => For replay a conference
-  - stream => Stream on Youtube or Facebook
-  - hls => HLS Streaming
+
+3. There are four possible layout types that can be requested of the mixer layout app. These are:
+
+    - `record`, which is used to record live conference;
+    - `replay`, which is used to record a replay of a conference;
+    - `stream`, which is used to stream to YouTube or Facebook; or
+    - `hls`, which is usef for streaming using HLS.
+
+    The mixer layout can vary the layout based on the type.
+    For example, for a live recording of a conference, the Platform will set the vaue for the input with id `layoutType` to  `record`.
+    The mixer layout can then present the appropriate layout for this situation.
+
 
 ## Project setup
 
- - Download ```git clone git@github.com:voxeet/voxeet-mix-layout.git```
- - ```yarn install```
- - ```yarn start```
+ - Download `git clone git@github.com:voxeet/voxeet-mix-layout.git`
+ - `yarn install`
+ - `yarn start`
 
-This Voxeet Mixer Layout use React with Redux. This means that the repository is composed by :
+This Dolby.io Mixer Layout app uses React with Redux. This means that the repository is composed of:
 
 - Actions
 - Reducers
 - Components
 
-And style inside :
+The CSS styles are defined in:
 
-- ```styles/css/index.css```
+- `styles/css/index.css`
+
 
 ## Test
 
-There is a way to test your layout immediately. Inside the ```index.js``` file you will find the ```ConferenceRoom```. You need to enable the test mode with the ```isDemo``` props (Boolean). 
-(Don't forget to put your own ```consumerKey``` and ```consumerSecret```)
+This app has a demonstration mode which can be used to view the layout in Chrome, which is the only supported browser.
 
-! Don't forget to disable the testing mode before pushing in production !
+At the bottom of `src/app/components/ConfrerenceRoom.js`, the default values are set for the properties that are used in demo mode.
+These are `isDemo`, `consumerKey` and `consumerSecret`.
+Change the default value for `isDemo` to `true` and set the `consumerKey` and `consumerSecret` value your app’s values. 
+
+_! Don’t forget to disable the testing mode before pushing into production !_
+
 
 ## Customise
 
-- Components
+### Components
 
-  ```ConferenceRoom.js``` :
+The mixer layout is determined by the components contained in the app and these are JavaScript `.js` files located in `src/app/components`.
+The top level of the app’s structure is `src/app/index/js` and this adds the top level component, `ConferenceRoom`.
 
-  In this file you will find the entry point of the mixer. This will allow our system to begin your layout mixer and join the Conference.
-  This file will decide which layout user depending on the situation (screenshare, video presentation, file presentation, conference with presenters, ...), the associated components will be mount. (listening for update from the server => User join, update on the stream, ...)
 
-  ```ScreenShareMode.js``` :
+#### `ConferenceRoom`
+This component is the entry point of the mixer’s layout logic. The component takes the state of the conference to produce the output.
 
-  This components is used when a screenshare, file presentation or video presentation is begin. The layout will change depending on the situation.
-    - ```TileVideoPiP.js``` => The video PiP from this presenter who screenshare, file presention or video presentation
-    - ```AttendeesParticipantVideoPiP.js``` => This component will draw the PiP video (Called from TileVideoPiP.js)
-    - ```TileVideoPresentation.js``` => This component is used when a presenter begin a video presentation (there is no VideoPiP for this one)
-    - ```TileFilePresentation.js``` => This component is used when a presenter begin a file presentation (We can see the VideoPiP if the camera is turn on)
-    - ```TileVideoScreenShare.js``` => This component is used when a presenter begin a screenshare (We can see the VideoPiP if the camera is turn on)
+When the mixer is not in a conference, this component contains the input fields and buttons listed above.
 
-  ```Tile.js``` :
+When the mixer is in a conference, those input fieds and buttons are removed.
+In their place the mixer layout’s layout consists of other components that reflect the state of the conference. These components are listed below.
 
-  This file is use for a classic conference with presenters (depending on the number of participant). The layout will re-render when a new presenter will join the conference.
+As the conference state changes, the `ConferenceRoom` component updates the layout.
+For example, if the layout is showing a tile for each participant, when the conference has a new participant join, a new tile is added for that participant,
+and the existing tiles are resized and rearranged to make room in the layout. 
 
-    - ```TileVideo.js``` => This tile is used to determine if an user have turned on this camera or not (Called the associated component)
-    - ```AttendeesParticipantVideo.js``` => This component is used when a presenter have his camera turned on (Called from TileVideo.js)
-    - ```AttendeesParticipantVuMeter.js``` => This components is used when a presenter does not have the camera turned on, this will draw the avatar (Called from TileVideo.js)
+The `ConferenceRoom` component creates the layout using other components:
 
-- Actions/Reducers
+- a `Tile` component is used for each participant when there are no screens being shared or file or video presentations displayed.
+- a `TileVideoPiP` component is used for each participant when a screen is being shared or a file or video presentations is displayed.
+- a `ScreenShareMode` component is used when a screen is being shared or a file or video presentations is displayed and this is used to show that stream.
 
-  - ```ConferenceActions.js/ConferenceReducer.js``` => This action contains all events from the server (participant join, left, start screenshare, ...)
-  - ```ParticipantActions.js/ParticipantReducer.js``` => This action contain all informations about CONNECTED users
-  - ```ParticipantWaitingActions.js/ParticipantWaitingReducer.js``` => This action is for 'waiting' participant, when an users is not yet connected or is a listener. We will not add it like a participant (ParticipantActions, to prevent a useless re-render)
+The layout used is selected based on the situation. Factors considered include:
+
+- number of conference participants with video
+- files being presented
+- participants sharing a screen
+- demo mode active 
+
+The app then starts listening for update from the Platform about changes in the conference. For example, participants joining, starting videos or screenshares, and so on.
+The layout is formed using the other components.
+
+
+#### `Tile`
+This component is used for a classic conference with presenters (depending on the number of participant). The layout will re-render when a new presenter joins the conference. This uses the `TileVideo` component internally.
+
+#### `ScreenShareMode`
+This component is used when a screen share, file presentation or video presentation is showing. The layout will change depending on the situation.
+This uses one of the following for the presentations: `TileVideoScreenShare`, `TileFilePresentation`, and `TileVideoPresentation`.
+
+#### `TileVideoPiP`
+This component is used to show a “Picture in picture” (PIP) video while the conference is showing a screen share, file presention or video presentation.
+It uses the `AttendeesParticipantVideoPiP` component internally.
+
+
+##### `TileVideo`
+This component is used to show either the video from a participant using `AttendeesParticipantVideo`) or an avatar with a talking indicator (using `AttendeesParticipantVuMeter`).
+
+##### `TileVideoPresentation`
+This component is used by `ScreenShareMode` to show a video presentation.
+
+##### `TileFilePresentation`
+This component is used by `ScreenShareMode` to show a file presentation.
+
+##### `TileVideoScreenShare`
+This component is used by `ScreenShareMode` to show a screen share.
+
+##### `AttendeesParticipantVideoPiP`
+This component is used by `TileVideoPiP` to show the PiP video.
+
+##### `AttendeesParticipantVideo`
+This component is used by `TileVideo` to show a presenter who has camera video turned on.
+
+##### `AttendeesParticipantVuMeter`
+This component is used by `TileVideo` to show a presenter who does not have camera video turned on. This displays an avatar with a talking indicator.
+
+
+### Actions/Reducers
+
+- `ConferenceActions.js`/`ConferenceReducer.js`
+    This action and reducer contain all events from the Platform (participant join, left, start screenshare, ...)
+
+- `ParticipantActions.js`/`ParticipantReducer.js`
+    This action and reducer contain all informations about CONNECTED users
+
+- `ParticipantWaitingActions.js`/`ParticipantWaitingReducer.js`
+    This action and reducer is for ‘waiting’ participants, when a user is not yet connected or is a listener.
 
 
 ## Generate Bundle
 
-```yarn run build```
+To generate a bundle of the JavaScript of the project, in the root directory of the app run:
 
-This command will generate a bundle js of your project.
+`yarn run build`
+
+This will generate `dist/index.html` and `dist/out.js`.
+
 
 ## Host and deploy
 
-To make the layout works with our mixer, you will need to host and deploy.
-When your layout is ready to deploy, go to your account on https://developer.voxeet.com and add your Mixer layout url inside the input associated.
+To request the Platform to use your layout app, you will need to host and deploy the app.
+
+* When your layout is deployed, go to your account on `https://dolby.io/dashboard/applications/summary`.
+* Select your application from the list on the left and then select the `Interactivity APIs` section.
+* Under the `Settings` tab, set the `Recording Mixer Layout URL` in the `Recording` section. Set the other options as needed.
+
 
 ## Tech
 
-  * [Voxeet Web SDK](https://www.npmjs.com/package/@voxeet/voxeet-web-sdk) - The WEB SDK Voxeet to communicate with Voxeet Servers
-  * [ReactJS](https://reactjs.org/) - A JavaScript library for building user interfaces
-  * [Redux](https://redux.js.org/) - Redux is a predictable state container for JavaScript apps.
-  * [Webpack](https://webpack.js.org/) - Bundle your project
+    * [Voxeet Web SDK](https://www.npmjs.com/package/@voxeet/voxeet-web-sdk) - The WEB SDK Voxeet to communicate with Voxeet Servers
+    * [ReactJS](https://reactjs.org/) - A JavaScript library for building user interfaces
+    * [Redux](https://redux.js.org/) - Redux is a predictable state container for JavaScript apps.
+    * [Webpack](https://webpack.js.org/) - Bundle your project
 
-© Voxeet, 2018
+© 2020 Dolby Laboratories
