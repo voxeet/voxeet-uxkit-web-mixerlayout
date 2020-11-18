@@ -14,9 +14,9 @@ module.exports = {
   ],
   devServer: {
     port: 8081,
-    https: true,
+    https: false,
     disableHostCheck: true,
-    host: '0.0.0.0',
+    host: 'localhost',
   },
   module: {
     loaders: [
