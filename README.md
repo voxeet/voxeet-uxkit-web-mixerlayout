@@ -2,7 +2,7 @@ Dolby Interactivity APIs Mixer Layout App
 =========================================
 
 <p align="center">
-<img src="https://cdn.dolby.io/wp-content/uploads/2020/05/Dolbyio-white-horizontal-e1589344433251.jpg" alt="Voxeet SDK logo" title="Dolby.io logo" width="200"/>
+<img src="wiki/dolbyio.jpeg" alt="Dolby.io logo" title="Dolby.io logo" width="200"/>
 </p>
 
 
@@ -74,15 +74,21 @@ For example, the layout may be equal sized tiles for the majority of the video b
 
 * Download the project with:
 
-    `git clone git@github.com:voxeet/voxeet-uxkit-web-mixerlayout.git`
+    ```
+    git clone git@github.com:voxeet/voxeet-uxkit-web-mixerlayout.git
+    ```
 
-* Install the dependancies with:
+* Install the dependencies with:
 
-    `yarn install`
+    ```
+    yarn install
+    ```
 
 * Start the application with:
 
-    `yarn start`
+    ```
+    yarn start
+    ```
 
 
 ## Test
@@ -98,7 +104,9 @@ Change the default value for `isDemo` to `true` and set the `consumerKey` and `c
 
 2. Start the server
 
-`yarn start`
+```
+yarn start
+```
 
 3. Launch Chrome and go to `http://127.0.0.1:8081/`. The layout type can be selected and a mix started:
 
@@ -196,7 +204,9 @@ This component is used by `TileVideo` to show a presenter who does not have came
 
 To generate a bundle of the JavaScript of the project, in the root directory of the app run:
 
-`yarn run build`
+```
+yarn run build
+```
 
 This will generate `dist/index.html` and `dist/out.js`.
 
