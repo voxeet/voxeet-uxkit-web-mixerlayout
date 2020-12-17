@@ -63,7 +63,7 @@ For example, the layout may be equal sized tiles for the majority of the video b
     - `record`, which is used to record live conference;
     - `replay`, which is used to record a replay of a conference;
     - `stream`, which is used to stream to YouTube or Facebook; or
-    - `hls`, which is usef for streaming using HLS.
+    - `hls`, which is used for streaming using HLS.
 
     The mixer layout can vary the layout based on the type.
     For example, for a live recording of a conference, the Platform will set the vaue for the input with id `layoutType` to  `record`.
