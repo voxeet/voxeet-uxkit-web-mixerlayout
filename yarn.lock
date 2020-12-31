@@ -94,10 +94,10 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
-"@voxeet/voxeet-web-sdk@^2.2.2":
-  version "2.3.1"
-  resolved "https://stg-gke-eu.voxeet.net/nexus/repository/npm-group/@voxeet/voxeet-web-sdk/-/voxeet-web-sdk-2.3.1.tgz#15e855727fa96ce092e1b312d8384aee347319cb"
-  integrity sha512-y3/rewt+Rtkk7KVUY9DuYffAY9s+m2nrvumfFuwMnOxAeJw2N4fB1KuyGx80MQqk70xpFfZCLTt3JO6l19uJIg==
+"@voxeet/voxeet-web-sdk@^2.3.1":
+  version "2.4.5"
+  resolved "https://registry.yarnpkg.com/@voxeet/voxeet-web-sdk/-/voxeet-web-sdk-2.4.5.tgz#32fcdcd3e0286bad5ab3db4f7b8cc06a687d6359"
+  integrity sha512-v8map8bJvxSWsIced58yusEm1VvxULDOBErSa6UmahTus/ILNLeIJrq3oJ3s+dEOrF00Ucr1NLuQ2kUXpmt7uA==
   dependencies:
     bowser "^2.8.1"
     browserslist "^4.5.2"
@@ -8809,9 +8809,9 @@ uri-js@^4.2.2:
     punycode "^2.1.0"
 
 urijs@^1.16.1:
-  version "1.19.2"
-  resolved "https://stg-gke-eu.voxeet.net/nexus/repository/npm-group/urijs/-/urijs-1.19.2.tgz#f9be09f00c4c5134b7cb3cf475c1dd394526265a"
-  integrity sha512-s/UIq9ap4JPZ7H1EB5ULo/aOUbWqfDi7FKzMC2Nz+0Si8GiT1rIEaprt8hy3Vy2Ex2aJPpOQv4P4DuOZ+K1c6w==
+  version "1.19.5"
+  resolved "https://registry.yarnpkg.com/urijs/-/urijs-1.19.5.tgz#119683ab4b2fb0bd637e5ea6dd9117bcac68d3e4"
+  integrity sha512-48z9VGWwdCV5KfizHsE05DWS5fhK6gFlx5MjO7xu0Krc5FGPWzjlXEVV0nPMrdVuP7xmMHiPZ2HoYZwKOFTZOg==
 
 urix@^0.1.0:
   version "0.1.0"
