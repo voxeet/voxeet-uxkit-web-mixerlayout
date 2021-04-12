@@ -98,7 +98,7 @@ This mode can be used with a live conference or with a replay of a recorded conf
 
 _Note: Don’t forget to disable the testing mode before pushing into production._
 
-1. At the bottom of `src/app/components/ConfrerenceRoom.js`, the default values are set for the properties that are used in demo mode.
+1. At the bottom of `src/app/components/ConferenceRoom.js`, the default values are set for the properties that are used in demo mode.
 These are `isDemo`, `consumerKey` and `consumerSecret`.
 Change the default value for `isDemo` to `true` and set the `consumerKey` and `consumerSecret` value your app’s values. 
 
