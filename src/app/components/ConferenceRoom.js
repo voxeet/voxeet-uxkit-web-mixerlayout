@@ -30,7 +30,6 @@ class ConferenceRoom extends Component {
     const layoutType = document.getElementById("select-layout-test").value;
     const conferenceNameTest = document.getElementById("conferenceNameTest")
       .value;
-    const userInfo = { user: {} };
     const constraints = {
       video: false,
       audio: false,
@@ -56,7 +55,6 @@ class ConferenceRoom extends Component {
   launchReplayConferenceTest() {
     const layoutType = document.getElementById("select-layout-test").value;
     const conferenceIdTest = document.getElementById("conferenceIdTest").value;
-    const userInfo = { user: { type: "user" } };
     const initialized = this.props.dispatch(
       ConferenceActions.initialize(
         this.props.consumerKey,
@@ -79,6 +77,7 @@ class ConferenceRoom extends Component {
   launchConference() {
     const accessToken = document.getElementById("accessToken").value;
     const refreshToken = document.getElementById("refreshToken").value;
+    const catToken = document.getElementById("catToken").value;
     const userData = document.getElementById("userData").value;
     const mediaRecorderUrl = document.getElementById("mediaRecorderUrl").value;
     let splitRecording = document.getElementById("splitRecording").value;
@@ -124,6 +123,7 @@ class ConferenceRoom extends Component {
               externalId: externalId,
               thirdPartyId: thirdPartyId,
             },
+            catToken,
             userData,
             userParams,
             mediaRecorderUrl,
@@ -139,6 +139,7 @@ class ConferenceRoom extends Component {
   launchReplayConference() {
     const accessToken = document.getElementById("accessToken").value;
     const refreshToken = document.getElementById("refreshToken").value;
+    const catToken = document.getElementById("catToken").value;
     const userData = document.getElementById("userData").value;
     const language = document.getElementById("language").value;
     const mediaRecorderUrl = document.getElementById("mediaRecorderUrl").value;
@@ -180,6 +181,7 @@ class ConferenceRoom extends Component {
               externalId: externalId,
               thirdPartyId: thirdPartyId,
             },
+            catToken,
             userData,
             userParams,
             mediaRecorderUrl,
@@ -371,6 +373,12 @@ class ConferenceRoom extends Component {
               value="refreshToken"
               id="refreshToken"
               name="refreshToken"
+            />
+            <input
+              type="hidden"
+              value="catToken"
+              id="catToken"
+              name="catToken"
             />
             <input
               type="hidden"

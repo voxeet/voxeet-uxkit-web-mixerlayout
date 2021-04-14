@@ -64,6 +64,7 @@ export class Actions {
     conferenceId,
     constraints,
     userInfo,
+    catToken,
     userData,
     userParams,
     mediaRecordedUrl,
@@ -80,15 +81,17 @@ export class Actions {
               alias: conferenceId,
             })
             .then((conference) => {
-              return VoxeetSDK.conference
-                .join(conference, {
-                  constraints,
+              const joinOptions = {
+                  conferenceAccessToken: (catToken && catToken.length > 0 ? catToken : null),
+                  constraints: constraints,
                   mixing: {
-                    enabled: true,
+                      enabled: true
                   },
-                  userParams,
-                  audio3D: false,
-                })
+                  userParams: {}
+              };
+
+              return VoxeetSDK.conference
+                .join(conference, joinOptions)
                 .then((payload) => {
                   console.log("Split Recording Activated : " + splitRecording);
                   console.log("Media Recorded Url : " + mediaRecordedUrl);
@@ -117,6 +120,7 @@ export class Actions {
     conferenceId,
     offset,
     userInfo,
+    catToken,
     userData,
     userParams,
     mediaRecordedUrl,
@@ -131,8 +135,13 @@ export class Actions {
           return VoxeetSDK.conference
             .fetch(conferenceId)
             .then((conference) => {
+              const replayOptions = {
+                  conferenceAccessToken: (catToken && catToken.length > 0 ? catToken : null),
+                  offset: offset
+              };
+
               return VoxeetSDK.conference
-                .replay(conference, offset, { enabled: true })
+                .replay(conference, replayOptions, { enabled: true })
                 .then((payload) => {
                   dispatch(
                     ParticipantRecordActions.saveDataForRecord(

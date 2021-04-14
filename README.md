@@ -5,21 +5,11 @@ Dolby Interactivity APIs Mixer Layout App
 <img src="wiki/dolbyio.jpeg" alt="Dolby.io logo" title="Dolby.io logo" width="200"/>
 </p>
 
-
-## Table of contents
-
-1. [Concept](#concet)
-2. [Project setup](#project-setup)
-3. [Customise](#customise)
-4. [Generate Bundle](#generate-bundle)
-5. [Host and deploy](#host-and-deploy)
-6. [Tech](#tech)
-
 ## Concept
 
 A mixer layout app is a web app that the Dolby Interactivity APIs Platform (the Platform) can use to determine the display for a video presentation of a conference.
 The mix can be of either a live conference or of a conference that has been recorded.
-The result can be an MP4 video file or can be streamed to YouTube, Facebook or using `HTTP Live Streaming` (HLS).
+The result can be an MP4 video file or can be streamed to an RTMP endpoint (like YouTube, Facebook...) or using `HTTP Live Streaming` (HLS).
 
 The resulting presentation can contain the video from each participant, as well as screens, files or videos being shared, and the size and position of each is under the control of the layout app.
 As participants join and leave, start and stop video streams or screen, file or video sharing, the layout app is updated with these changes, allowing for a dynamic layout. 
@@ -34,9 +24,10 @@ For example, the layout may be equal sized tiles for the majority of the video b
 
     These inputs and buttons are required and in this app they are found in the file `src/app/components/ConferenceRoom.js`. 
 
-    ```
+    ```html
     <input type="hidden" value="accessToken" id="accessToken" name="accessToken"/>
     <input type="hidden" value="refreshToken" id="refreshToken" name="refreshToken"/>
+    <input type="hidden" value="catToken" id="catToken" name="catToken"/>
     <input type="hidden" value="voxeet" id="conferenceId" name="conferenceId"/>
     <input type="hidden" value="refreshUrl" id="refreshUrl" name="refreshUrl"/>
     <input type="hidden" value="1234" id="thirdPartyId" name="thirdPartyId"/>
@@ -66,7 +57,7 @@ For example, the layout may be equal sized tiles for the majority of the video b
     - `hls`, which is used for streaming using HLS.
 
     The mixer layout can vary the layout based on the type.
-    For example, for a live recording of a conference, the Platform will set the vaue for the input with id `layoutType` to  `record`.
+    For example, for a live recording of a conference, the Platform will set the values for the input with id `layoutType` to  `record`.
     The mixer layout can then present the appropriate layout for this situation.
 
 
@@ -74,19 +65,19 @@ For example, the layout may be equal sized tiles for the majority of the video b
 
 * Download the project with:
 
-    ```
+    ```bash
     git clone git@github.com:voxeet/voxeet-uxkit-web-mixerlayout.git
     ```
 
 * Install the dependencies with:
 
-    ```
+    ```bash
     yarn install
     ```
 
 * Start the application with:
 
-    ```
+    ```bash
     yarn start
     ```
 
@@ -104,7 +95,7 @@ Change the default value for `isDemo` to `true` and set the `consumerKey` and `c
 
 2. Start the server
 
-```
+```bash
 yarn start
 ```
 
@@ -114,7 +105,7 @@ yarn start
 * To use a replay of an earlier conference, enter the conference replay ID and click `Replay conference`.
 
 
-## Customise
+## Customize
 
 This Dolby.io Mixer Layout app uses React with Redux. The source is in `src/app` and the CSS styles are defined in `scr/styles/css/index.css`.
 
@@ -130,7 +121,7 @@ This component is the entry point of the mixer’s layout logic. The component t
 
 When the mixer is not in a conference, this component contains the input fields and buttons listed above.
 
-When the mixer is in a conference, those input fieds and buttons are removed.
+When the mixer is in a conference, those input fields and buttons are removed.
 In their place the mixer layout’s layout consists of other components that reflect the state of the conference. These components are listed below.
 
 As the conference state changes, the `ConferenceRoom` component updates the layout.
@@ -150,7 +141,7 @@ The layout used is selected based on the situation. Factors considered include:
 - participants sharing a screen
 - demo mode active 
 
-The app then starts listening for update from the Platform about changes in the conference. For example, participants joining, starting videos or screenshares, and so on.
+The app then starts listening for update from the Platform about changes in the conference. For example, participants joining, starting videos or screenshare, and so on.
 The layout is formed using the other components.
 
 
@@ -162,7 +153,7 @@ This component is used when a screen share, file presentation or video presentat
 This uses one of the following for the presentations: `TileVideoScreenShare`, `TileFilePresentation`, and `TileVideoPresentation`.
 
 #### `TileVideoPiP`
-This component is used to show a “Picture in picture” (PIP) video while the conference is showing a screen share, file presention or video presentation.
+This component is used to show a “Picture in picture” (PIP) video while the conference is showing a screen share, file presentation or video presentation.
 It uses the `AttendeesParticipantVideoPiP` component internally.
 
 
@@ -188,13 +179,13 @@ This component is used by `TileVideo` to show a presenter who has camera video t
 This component is used by `TileVideo` to show a presenter who does not have camera video turned on. This displays an avatar with a talking indicator.
 
 
-### Actions/Reducers
+### Actions / Reducers
 
 - `ConferenceActions.js`/`ConferenceReducer.js`
     This action and reducer contain all events from the Platform (participant join, left, start screenshare, ...)
 
 - `ParticipantActions.js`/`ParticipantReducer.js`
-    This action and reducer contain all informations about CONNECTED users
+    This action and reducer contain all information about CONNECTED users
 
 - `ParticipantWaitingActions.js`/`ParticipantWaitingReducer.js`
     This action and reducer is for ‘waiting’ participants, when a user is not yet connected or is a listener.
@@ -204,7 +195,7 @@ This component is used by `TileVideo` to show a presenter who does not have came
 
 To generate a bundle of the JavaScript of the project, in the root directory of the app run:
 
-```
+```bash
 yarn run build
 ```
 
@@ -227,4 +218,4 @@ To request the Platform to use your layout app, you will need to host and deploy
 * [Redux](https://redux.js.org/) - Redux is a predictable state container for JavaScript apps.
 * [Webpack](https://webpack.js.org/) - Bundle your project
 
-© 2020 Dolby Laboratories
+© 2021 Dolby Laboratories
