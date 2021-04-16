@@ -239,7 +239,7 @@ class ConferenceRoom extends Component {
               <div>
                 <h3>Live conference</h3>
                 <input
-                  placeholder="Conference name"
+                  placeholder="Conference name (alias)"
                   id="conferenceNameTest"
                   name="conferenceNameTest"
                 />
