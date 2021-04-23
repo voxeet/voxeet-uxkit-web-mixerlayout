@@ -1,7 +1,7 @@
 /* GENERAL */
 
 body {
-  background-color: #fbfbfb;
+  background-color: #212330;
   font-family: Open Sans, sans-serif;
   from {
     transform: rotate(0deg);
@@ -57,9 +57,7 @@ body {
   margin: auto;
   background-color: #000c31;
   border-radius: 8px;
-  padding: 30px;
-  margin-top: 50vh;
-  transform: translateY(-50%);
+  padding: 10px;
 }
 
 .container-test select {
