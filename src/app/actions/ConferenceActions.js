@@ -4,7 +4,7 @@ import axios from "axios";
 import { Actions as ConferenceActions } from "./ConferenceActions";
 import { Actions as ParticipantActions } from "./ParticipantActions";
 import { Actions as ParticipantWaitingActions } from "./ParticipantWaitingActions";
-import { Actions as ParticipantRecordActions } from "./ParticipantRecordActions";
+import { Actions as VideoPresentationActions } from "./VideoPresentationActions";
 
 export const Types = {
   CONFERENCE_LEAVE: "CONFERENCE_LEAVE",
@@ -63,12 +63,12 @@ export class Actions {
   static join(
     conferenceId,
     constraints,
+    catToken,
     userInfo,
     userData,
     userParams,
     mediaRecordedUrl,
     thirdPartyId,
-    splitRecording,
     language
   ) {
     return (dispatch, getState) => {
@@ -83,6 +83,8 @@ export class Actions {
               return VoxeetSDK.conference
                 .join(conference, {
                   constraints,
+                  conferenceAccessToken:
+                    catToken && catToken.length > 0 ? catToken : null,
                   mixing: {
                     enabled: true,
                   },
@@ -90,20 +92,9 @@ export class Actions {
                   audio3D: false,
                 })
                 .then((payload) => {
-                  console.log("Split Recording Activated : " + splitRecording);
                   console.log("Media Recorded Url : " + mediaRecordedUrl);
                   console.log("User Params : " + userParams);
                   console.log("User Data : " + userData);
-                  dispatch(
-                    ParticipantRecordActions.saveDataForRecord(
-                      payload.conferenceId,
-                      userData,
-                      mediaRecordedUrl,
-                      thirdPartyId,
-                      splitRecording,
-                      language
-                    )
-                  );
                 })
                 .catch();
             })
@@ -116,12 +107,12 @@ export class Actions {
   static replay(
     conferenceId,
     offset,
+    catToken,
     userInfo,
     userData,
     userParams,
     mediaRecordedUrl,
     thirdPartyId,
-    splitRecording,
     language
   ) {
     return (dispatch) => {
@@ -132,19 +123,16 @@ export class Actions {
             .fetch(conferenceId)
             .then((conference) => {
               return VoxeetSDK.conference
-                .replay(conference, offset, { enabled: true })
-                .then((payload) => {
-                  dispatch(
-                    ParticipantRecordActions.saveDataForRecord(
-                      payload.id,
-                      userData,
-                      mediaRecordedUrl,
-                      thirdPartyId,
-                      splitRecording,
-                      language
-                    )
-                  );
-                })
+                .replay(
+                  conference,
+                  {
+                    offset: offset,
+                    conferenceAccessToken:
+                      catToken && catToken.length > 0 ? catToken : null,
+                  },
+                  { enabled: true }
+                )
+                .then((payload) => {})
                 .catch();
             })
             .catch();
@@ -355,6 +343,10 @@ export class Actions {
           data.timestamp / 1000
         )
       );
+      dispatch(VideoPresentationActions.play());
+      setTimeout(() => {
+        dispatch(VideoPresentationActions.seek(data.timestamp / 1000));
+      }, 250);
     };
   }
 
@@ -393,89 +385,6 @@ export class Actions {
     };
   }
 
-  static checkIfRecordStart(userId, stream) {
-    return (dispatch, getState) => {
-      const {
-        voxeet: { participantsWaiting, participantsRecord },
-      } = getState();
-      const indexParticipantRecord = participantsRecord.participantsRecord.findIndex(
-        (p) => p.userId === userId
-      );
-      const indexParticipant = participantsWaiting.participants.findIndex(
-        (p) => p.participant_id === userId
-      );
-      if (stream != null) {
-        if (indexParticipantRecord == -1) {
-          console.log("START NEW RECORD FOR USER " + userId);
-          dispatch(
-            ParticipantRecordActions.onParticipantPeerRecordStart(
-              userId,
-              stream,
-              participantsWaiting.participants[indexParticipant].metadata
-            )
-          );
-        } else {
-          console.log("UPDATE RECORD FOR USER " + userId);
-          dispatch(
-            ParticipantRecordActions.onParticipantPeerRecordUpdate(
-              userId,
-              stream
-            )
-          );
-        }
-      }
-    };
-  }
-
-  static filterAndHandleConferenceEnded(data) {
-    return (dispatch, getState) => {
-      const {
-        voxeet: { participantsRecord },
-      } = getState();
-      //if (data.conferenceId == participantsRecord.conferenceId) {
-      dispatch(this.killAllRecord());
-      dispatch(this._conferenceEnded());
-      //}
-    };
-  }
-
-  static checkIfRecordUpdate(userId, stream) {
-    return (dispatch, getState) => {
-      const {
-        voxeet: { participants },
-      } = getState();
-      const index = participants.participants.findIndex(
-        (p) => p.participant_id === userId
-      );
-      if (stream != null) {
-        console.log("UPDATE RECORD FOR USER " + userId);
-        dispatch(
-          ParticipantRecordActions.onParticipantPeerRecordUpdate(userId, stream)
-        );
-      }
-    };
-  }
-
-  static checkIncrementRecord(userId, status) {
-    return (dispatch, getState) => {
-      const {
-        voxeet: { participants },
-      } = getState();
-      const index = participants.participants.findIndex(
-        (p) => p.participant_id === userId
-      );
-      if (index == -1 && status == "Inactive") return;
-      if (
-        index != -1 &&
-        participants.participants[index].status == "Left" &&
-        status == "Connected"
-      ) {
-        console.log("INCREMENT PARTICIPANT RECORD FOR USER " + userId);
-        dispatch(ParticipantRecordActions.incrementParticipantRecord(userId));
-      }
-    };
-  }
-
   static checkIfUserJoined(userId, stream) {
     return (dispatch, getState) => {
       const {
@@ -503,22 +412,6 @@ export class Actions {
     };
   }
 
-  static killAllRecord() {
-    return (dispatch, getState) => {
-      console.log("KILL ALL RECORD");
-      const {
-        voxeet: { participantsRecord },
-      } = getState();
-      participantsRecord.participantsRecord.map((participant) => {
-        dispatch(
-          ParticipantRecordActions.onParticipantPeerRecordStop(
-            participant.userId
-          )
-        );
-      });
-    };
-  }
-
   static _initializeListeners(dispatch) {
     return new Promise((resolve, reject) => {
       VoxeetSDK.conference.on("participantAdded", (participant) => {
@@ -537,7 +430,7 @@ export class Actions {
 
       VoxeetSDK.conference.on("ended", (data) => {
         console.log("CONFERENCE ENDED");
-        dispatch(this.filterAndHandleConferenceEnded(data));
+        dispatch(this._conferenceEnded());
       });
 
       VoxeetSDK.videoPresentation.on("started", (data) => {
@@ -555,7 +448,6 @@ export class Actions {
       });
 
       VoxeetSDK.recording.on("stop", () => {
-        dispatch(this.killAllRecord());
         console.log("RECORDING STOPPED");
       });
 
@@ -567,32 +459,33 @@ export class Actions {
 
       VoxeetSDK.videoPresentation.on("played", (data) => {
         console.log("VIDEO PRESENTATION PLAY: " + data.timestamp);
-        var videoPresentation = document.getElementById(
-          "video-file-presentation"
-        );
-        videoPresentation.currentTime = data.timestamp / 1000;
-        videoPresentation.play();
+        dispatch(VideoPresentationActions.play());
+        setTimeout(() => {
+          dispatch(VideoPresentationActions.seek(data.timestamp / 1000));
+        }, 250);
       });
 
       VoxeetSDK.videoPresentation.on("paused", (data) => {
         console.log("VIDEO PRESENTATION PAUSE: " + data.timestamp);
-        var videoPresentation = document.getElementById(
-          "video-file-presentation"
-        );
-        videoPresentation.currentTime = data.timestamp / 1000;
-        videoPresentation.pause();
+        dispatch(VideoPresentationActions.pause());
       });
 
       VoxeetSDK.videoPresentation.on("sought", (data) => {
         console.log("VIDEO PRESENTATION SEEK: " + data.timestamp);
-        var videoPresentation = document.getElementById(
-          "video-file-presentation"
-        );
-        videoPresentation.currentTime = data.timestamp / 1000;
+        dispatch(VideoPresentationActions.seek(data.timestamp / 1000));
+      });
+
+      VoxeetSDK.conference.on("error", (error) => {
+        if (error.name === "PeerConnectionDisconnectedError") {
+          console.log("AN ERROR HAS BEEN HANDLED ON PEER CONNECTION");
+          // console.log("CONFERENCE ENDED");
+          // dispatch(this.killAllRecord());
+          // dispatch(this._conferenceEnded());
+        }
       });
 
       VoxeetSDK.conference.on("streamAdded", (participant, stream) => {
-        if (stream.type === "ScreenShare") {
+        if (stream && stream.type === "ScreenShare") {
           dispatch(
             this.checkIfUserExistScreenShareStart(participant.id, stream)
           );
@@ -609,7 +502,6 @@ export class Actions {
 
       VoxeetSDK.conference.on("streamUpdated", (participant, stream) => {
         console.log("PARTICIPANT UPDATED: " + participant.id);
-        dispatch(this.checkIfRecordUpdate(participant.id, stream));
         dispatch(this.checkIfUpdateUser(participant.id, stream));
       });
 
@@ -624,9 +516,6 @@ export class Actions {
             ParticipantWaitingActions.onParticipantWaitingLeft(participant.id)
           );
           dispatch(ParticipantActions.onParticipantLeft(participant.id));
-          dispatch(
-            ParticipantRecordActions.onParticipantPeerRecordStop(participant.id)
-          );
         }
       });
 

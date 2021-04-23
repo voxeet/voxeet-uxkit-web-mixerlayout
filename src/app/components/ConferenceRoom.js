@@ -8,7 +8,7 @@ import Tile from "./Tile";
 import ScreenShareMode from "./ScreenShareMode";
 import { Actions as ConferenceActions } from "../actions/ConferenceActions";
 import { Actions as ParticipantActions } from "../actions/ParticipantActions";
-import TileVideoPiP from "./TileVideoPiP";
+import TilePiP from "./TilePiP";
 import hangUp from "../../static/images/hang-up.svg";
 
 @connect((state) => {
@@ -24,6 +24,34 @@ class ConferenceRoom extends Component {
       isLaunch: false,
       layoutType: "record",
     };
+  }
+
+  launchConferenceTestCat() {
+    const layoutType = document.getElementById("select-layout-test").value;
+    const conferenceAccessTokenTest = document.getElementById("conferenceAccessTokenTest").value;
+    const conferenceNameCatTest = document.getElementById("conferenceNameCatTest")
+      .value;
+    const userInfo = { user: {} };
+    const constraints = {
+      video: false,
+      audio: false,
+    };
+    const initialized = this.props.dispatch(
+      ConferenceActions.initialize(
+        this.props.consumerKey,
+        this.props.consumerSecret
+      )
+    );
+    initialized.then(() =>
+      this.props
+        .dispatch(
+          ConferenceActions.join(conferenceNameCatTest, constraints, conferenceAccessTokenTest, {
+            name: "Mixer",
+            externalId: "Mixer_record",
+          })
+        )
+        .then(() => this.setState({ isLaunch: true, layoutType: layoutType }))
+    );
   }
 
   launchConferenceTest() {
@@ -45,6 +73,29 @@ class ConferenceRoom extends Component {
       this.props
         .dispatch(
           ConferenceActions.join(conferenceNameTest, constraints, {
+            name: "Mixer",
+            externalId: "Mixer_record",
+          })
+        )
+        .then(() => this.setState({ isLaunch: true, layoutType: layoutType }))
+    );
+  }
+
+  launchReplayConferenceTestCat() {
+    const layoutType = document.getElementById("select-layout-test").value;
+    const conferenceIdReplayTestCat = document.getElementById("conferenceIdReplayTestCat").value;
+    const conferenceAccessTokenReplayTest = document.getElementById("conferenceAccessTokenReplayTest").value;
+    const initialized = this.props.dispatch(
+      ConferenceActions.initialize(
+        this.props.consumerKey,
+        this.props.consumerSecret,
+        { name: "Mixer", externalId: "Mixer_" }
+      )
+    );
+    initialized.then(() =>
+      this.props
+        .dispatch(
+          ConferenceActions.replay(conferenceIdReplayTestCat, 0, conferenceAccessTokenReplayTest, {
             name: "Mixer",
             externalId: "Mixer_record",
           })
@@ -81,11 +132,11 @@ class ConferenceRoom extends Component {
     const refreshToken = document.getElementById("refreshToken").value;
     const userData = document.getElementById("userData").value;
     const mediaRecorderUrl = document.getElementById("mediaRecorderUrl").value;
-    let splitRecording = document.getElementById("splitRecording").value;
     const refreshUrl = document.getElementById("refreshUrl").value;
     const conferenceId = document.getElementById("conferenceId").value;
     const thirdPartyId = document.getElementById("thirdPartyId").value;
     const layoutType = document.getElementById("layoutType").value;
+    const catToken = document.getElementById("catToken").value;
     const language = document.getElementById("language").value;
     let userParams = null;
     let externalId = "Mixer_" + layoutType;
@@ -96,11 +147,6 @@ class ConferenceRoom extends Component {
       externalId = "Mixer_" + layoutType + "_" + language;
     } else {
       userParams = {};
-    }
-    if (splitRecording == "true") {
-      splitRecording = true;
-    } else {
-      splitRecording = false;
     }
     const constraints = {
       video: false,
@@ -119,6 +165,7 @@ class ConferenceRoom extends Component {
           ConferenceActions.join(
             conferenceId,
             constraints,
+            catToken,
             {
               name: "Mixer",
               externalId: externalId,
@@ -128,7 +175,6 @@ class ConferenceRoom extends Component {
             userParams,
             mediaRecorderUrl,
             thirdPartyId,
-            splitRecording,
             language
           )
         )
@@ -140,9 +186,9 @@ class ConferenceRoom extends Component {
     const accessToken = document.getElementById("accessToken").value;
     const refreshToken = document.getElementById("refreshToken").value;
     const userData = document.getElementById("userData").value;
+    const catToken = document.getElementById("catToken").value;
     const language = document.getElementById("language").value;
     const mediaRecorderUrl = document.getElementById("mediaRecorderUrl").value;
-    let splitRecording = document.getElementById("splitRecording").value;
     const refreshUrl = document.getElementById("refreshUrl").value;
     const conferenceId = document.getElementById("conferenceId").value;
     const thirdPartyId = document.getElementById("thirdPartyId").value;
@@ -157,11 +203,6 @@ class ConferenceRoom extends Component {
     } else {
       userParams = {};
     }
-    if (splitRecording == "true") {
-      splitRecording = true;
-    } else {
-      splitRecording = false;
-    }
     const initialized = this.props.dispatch(
       ConferenceActions.initializeWithToken(
         accessToken,
@@ -175,6 +216,7 @@ class ConferenceRoom extends Component {
           ConferenceActions.replay(
             conferenceId,
             0,
+            catToken,
             {
               name: "Mixer",
               externalId: externalId,
@@ -184,7 +226,6 @@ class ConferenceRoom extends Component {
             userParams,
             mediaRecorderUrl,
             thirdPartyId,
-            splitRecording,
             language
           )
         )
@@ -211,10 +252,6 @@ class ConferenceRoom extends Component {
     const { isLaunch, layoutType } = this.state;
     let count = -1;
     let participantConnected = participants.filter((p) => p.isConnected);
-    let className = "tiles-list";
-    if (participantConnected.length <= 15) {
-      className += "-" + participantConnected.length;
-    }
     return (
       <div>
         <audio id="recordedAudio"></audio>
@@ -239,7 +276,7 @@ class ConferenceRoom extends Component {
               <div>
                 <h3>Live conference</h3>
                 <input
-                  placeholder="Conference name (alias)"
+                  placeholder="Conference name"
                   id="conferenceNameTest"
                   name="conferenceNameTest"
                 />
@@ -262,6 +299,44 @@ class ConferenceRoom extends Component {
                   onClick={this.launchReplayConferenceTest.bind(this)}
                 >
                   Replay conference
+                </button>
+              </div>
+              <div>
+                <h3>Live protected conference</h3>
+                <input
+                  placeholder="Conference name"
+                  id="conferenceNameCatTest"
+                  name="conferenceNameCatTest"
+                />
+                <input
+                  placeholder="Conference Access Token"
+                  id="conferenceAccessTokenTest"
+                  name="conferenceAccessTokenTest"
+                />
+                <button
+                  id="joinConferenceCatTest"
+                  onClick={this.launchConferenceTestCat.bind(this)}
+                >
+                  Join Protected conference
+                </button>
+              </div>
+              <div>
+                <h3>Replay Protected conference</h3>
+                <input
+                  placeholder="Conference Id Replay"
+                  id="conferenceIdReplayTestCat"
+                  name="conferenceIdReplayTestCat"
+                />
+                <input
+                  placeholder="Conference Access Token"
+                  id="conferenceAccessTokenReplayTest"
+                  name="conferenceAccessTokenReplayTest"
+                />
+                <button
+                  id="replayConferenceTest"
+                  onClick={this.launchReplayConferenceTestCat.bind(this)}
+                >
+                  Replay protected conference
                 </button>
               </div>
             </div>
@@ -288,14 +363,8 @@ class ConferenceRoom extends Component {
               <div>
                 {(screenShareMode || filePresentationMode) &&
                   !videoPresentationMode &&
-                  participantConnected.map((participant, i) => {
-                    return (
-                      <TileVideoPiP
-                        key={i}
-                        participants={participantConnected}
-                      />
-                    );
-                  })}
+                    <TilePiP />
+                }
                 {participantConnected.length > 0 ? (
                   <ScreenShareMode
                     screenShareMode={screenShareMode}
@@ -326,13 +395,14 @@ class ConferenceRoom extends Component {
               data-number-user={participantConnected.length}
             >
               <div id="conferenceStartedVoxeet"></div>
-              <div id="tile-list" className={className}>
+              <div id="tile-list" className="tiles-list-generic">
                 {participantConnected.length > 0 ? (
                   participantConnected.map((participant, i) => {
                     count = count + 1;
                     return (
                       <Tile
                         key={i}
+                        participantConnected={participantConnected.length}
                         nbParticipant={count}
                         participant={participant}
                       />
@@ -374,17 +444,17 @@ class ConferenceRoom extends Component {
             />
             <input
               type="hidden"
+              value="catToken"
+              id="catToken"
+              name="catToken"
+            />
+            <input
+              type="hidden"
               value="voxeet"
               id="conferenceId"
               name="conferenceId"
             />
             <input type="hidden" value="voxeet" id="userData" name="userData" />
-            <input
-              type="hidden"
-              value="false"
-              id="splitRecording"
-              name="splitRecording"
-            />
             <input type="hidden" value="en" id="language" name="language" />
             <input
               type="hidden"
