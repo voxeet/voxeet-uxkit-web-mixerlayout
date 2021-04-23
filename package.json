@@ -8,6 +8,7 @@
     "express": "^4.16.4",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
+    "react-player": "2.7.2",
     "react-redux": "^5.0.7",
     "react-scripts": "1.1.4",
     "redux": "^3.7.2",
@@ -37,6 +38,6 @@
   },
   "scripts": {
     "start": "webpack-dev-server -d",
-    "build": "npx webpack --output-filename out.js --output-path dist"
+    "build": "npx webpack  --output-filename out.js --output-path dist"
   }
 }
