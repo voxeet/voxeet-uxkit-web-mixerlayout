@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import AttendeesParticipantVideoPiP from "./AttendeesParticipantVideoPiP";
@@ -10,7 +10,7 @@ import VoxeetSDK from "@voxeet/voxeet-web-sdk";
     participantsStore: state.voxeet.participants,
   };
 })
-class TileVideoPiP extends Component {
+class TilePiP extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -22,19 +22,19 @@ class TileVideoPiP extends Component {
 
   componentDidMount() {
     this.mounted = true;
-
-    const index = this.props.participants.findIndex((p) => p.stream !== null);
-    this.setState({ activeSpeaker: this.props.participants[index] });
-
     const { participants } = this.state;
+
+    const index = participants.findIndex((p) => p.stream !== null);
+    this.setState({ activeSpeaker: participants[index] });
+
     this._interval = setInterval(() => {
+      const { activeSpeaker } = this.state;
       for (let participant of participants) {
         if (participant.participant_id && this.mounted)
           VoxeetSDK.conference.isSpeaking(
             VoxeetSDK.conference.participants.get(participant.participant_id),
             (isSpeaking) => {
-              const { activeSpeaker } = this.state;
-              if (isSpeaking && participant.stream) {
+              if (isSpeaking) {
                 if (activeSpeaker != participant) {
                   this.setState({ activeSpeaker: participant });
                 }
@@ -42,7 +42,7 @@ class TileVideoPiP extends Component {
             }
           );
       }
-    }, 500);
+    }, 3000);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -79,16 +79,20 @@ class TileVideoPiP extends Component {
     const { activeSpeaker } = this.state;
     return (
       <div id="video-pip" className="video-pip">
-        {activeSpeaker && activeSpeaker.stream && (
-          <AttendeesParticipantVideoPiP stream={activeSpeaker.stream} />
-        )}
+          { activeSpeaker &&
+            <Fragment>
+              <AttendeesParticipantVideoPiP stream={activeSpeaker.stream ? activeSpeaker.stream : null} />
+              { activeSpeaker.stream == null &&
+                <AttendeesParticipantPiP participant={activeSpeaker} />
+              }
+            </Fragment>
+          }
       </div>
     );
   }
 }
 
-TileVideoPiP.propTypes = {
-  participants: PropTypes.array.isRequired,
+TilePiP.propTypes = {
 };
 
-export default TileVideoPiP;
+export default TilePiP;

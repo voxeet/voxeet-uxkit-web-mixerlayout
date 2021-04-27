@@ -14,7 +14,13 @@ class AttendeesParticipantVideoPiP extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.updateStream(nextProps);
+    const tmp = document.getElementById("video-participant-pip")
+    if (nextProps.stream == null) { 
+      tmp.style.display = "none";;
+    } else {
+      this.updateStream(nextProps);
+      tmp.style.display = "block";
+    }
   }
 
   updateStream(props) {
