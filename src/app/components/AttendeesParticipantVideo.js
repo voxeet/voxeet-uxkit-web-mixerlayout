@@ -36,13 +36,13 @@ class AttendeesParticipantVideo extends Component {
         return (
             window.voxeetNodeModule ?
                 <canvas className="video-participant"
-                    width={width}
+                    width={width + "%"}
                     height={height}
                     ref={ref => this.video = ref}
                     />
             :
                 <video className="video-participant"
-                    width={width}
+                    width={width + "%"}
                     height={height}
                     ref={ref => this.video = ref}
                     onDoubleClick={this.toggleScreenShareFullScreen}

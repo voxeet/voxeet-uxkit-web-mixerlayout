@@ -13,13 +13,13 @@ class TileVideo extends Component {
     }
 
     render() {
-        const { participant, stream } = this.props
+        const { participant, stream, width } = this.props
         const photoUrl = participant.avatarUrl || userPlaceholder
         return (
             <span className="tile-video video-frame">
                 { stream ?
                     <div className="stream-media">
-                        <AttendeesParticipantVideo stream={stream} />
+                        <AttendeesParticipantVideo width={width} stream={stream} />
                     </div>
                     :
                     <AttendeesParticipantVuMeter participant={participant} width={80} height={80} customClass={"preview-avatar"} />
@@ -30,6 +30,8 @@ class TileVideo extends Component {
 }
 
 TileVideo.propTypes = {
+    width: PropTypes.number,
+    height: PropTypes.number,
     participant: PropTypes.object.isRequired,
     stream: PropTypes.object
 }
