@@ -89,7 +89,6 @@ export class Actions {
                     enabled: true,
                   },
                   userParams,
-                  audio3D: false,
                 })
                 .then((payload) => {
                   console.log("Media Recorded Url : " + mediaRecordedUrl);

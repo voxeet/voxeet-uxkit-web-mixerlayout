@@ -249,7 +249,7 @@ class ConferenceRoom extends Component {
       filePresentationMode,
       videoPresentationMode,
     } = this.props.conferenceStore;
-    const { isLaunch, layoutType } = this.state;
+    const { isLaunch } = this.state;
     let count = -1;
     let participantConnected = participants.filter((p) => p.isConnected);
     return (
@@ -258,8 +258,8 @@ class ConferenceRoom extends Component {
         {isDemo && !isLaunch && (
           <div>
             <div className="container-test">
-              <h1>Voxeet Layout Testing</h1>
-              {(consumerKey == null || consumerKey == null) && (
+              <h1>Dolby Mixer Layout Testing</h1>
+              {(consumerKey == null || consumerSecret == null) && (
                 <div className="keys-missing-test">
                   Missing consumerKey / consumerSecret inside index.js
                 </div>
@@ -276,7 +276,7 @@ class ConferenceRoom extends Component {
               <div>
                 <h3>Live conference</h3>
                 <input
-                  placeholder="Conference name"
+                  placeholder="Conference alias"
                   id="conferenceNameTest"
                   name="conferenceNameTest"
                 />
@@ -304,7 +304,7 @@ class ConferenceRoom extends Component {
               <div>
                 <h3>Live protected conference</h3>
                 <input
-                  placeholder="Conference name"
+                  placeholder="Conference alias"
                   id="conferenceNameCatTest"
                   name="conferenceNameCatTest"
                 />

@@ -38,6 +38,6 @@
   },
   "scripts": {
     "start": "webpack-dev-server -d",
-    "build": "npx webpack  --output-filename out.js --output-path dist"
+    "build": "npx webpack --output-filename out.js --output-path dist"
   }
 }

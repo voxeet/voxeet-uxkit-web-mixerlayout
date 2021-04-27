@@ -23,32 +23,15 @@ For example, the layout may be equal sized tiles for the majority of the video b
    These inputs and buttons are required and in this app they are found in the file `src/app/components/ConferenceRoom.js`.
 
    ```html
-   <input
-     type="hidden"
-     value="accessToken"
-     id="accessToken"
-     name="accessToken"
-   />
-   <input
-     type="hidden"
-     value="refreshToken"
-     id="refreshToken"
-     name="refreshToken"
-   />
+   <input type="hidden" value="accessToken" id="accessToken" name="accessToken"/>
+   <input type="hidden" value="refreshToken" id="refreshToken" name="refreshToken"/>
    <input type="hidden" value="catToken" id="catToken" name="catToken" />
    <input type="hidden" value="voxeet" id="conferenceId" name="conferenceId" />
    <input type="hidden" value="refreshUrl" id="refreshUrl" name="refreshUrl" />
    <input type="hidden" value="1234" id="thirdPartyId" name="thirdPartyId" />
    <input type="hidden" value="stream" id="layoutType" name="layoutType" />
-   <button id="joinConference" onClick="{this.launchConference.bind(this)}">
-     Join conference
-   </button>
-   <button
-     id="replayConference"
-     onClick="{this.launchReplayConference.bind(this)}"
-   >
-     Replay conference
-   </button>
+   <button id="joinConference" onClick="{this.launchConference.bind(this)}">Join conference</button>
+   <button id="replayConference" onClick="{this.launchReplayConference.bind(this)}">Replay conference</button>
    ```
 
    The Platform triggers either the `joinConference` button or the `replayConference` button, depending on whether the conference is live or a replay.
