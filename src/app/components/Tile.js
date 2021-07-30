@@ -36,8 +36,8 @@ class Tile extends Component {
         }
 
         return (
-            <div id="tile-item" style={{height: (calcHeight * 100) + '%', width: calcWidth * 100 + '%'}} className={'tile-item tile-generic' + (participant.isConnected ? ' participant-available' : ' participant-offline')}>
-                <TileVideo width={100} stream={participant.stream} participant={participant} />
+            <div id="tile-item" style={{height: (calcHeight * 100).toString() + '%', width: (calcWidth * 100).toString() + '%'}} className={'tile-item tile-generic' + (participant.isConnected ? ' participant-available' : ' participant-offline')}>
+                <TileVideo width={"100"} stream={participant.stream} participant={participant} />
             </div>
         )
     }

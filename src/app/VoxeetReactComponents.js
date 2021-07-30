@@ -1,7 +1,5 @@
-import reducer from './reducers'
-import ConferenceRoom from './components/ConferenceRoom'
+import reducers from "./reducers";
+import ConferenceRoom from "./components/ConferenceRoom";
 
-module.exports = {
-    reducer,
-    ConferenceRoom
-}
+exports.reducers = reducers;
+exports.ConferenceRoom = ConferenceRoom;

@@ -108,6 +108,7 @@ body {
 /* HIDDEN */
 
 #joinConference,
+#leaveConference,
 #replayConference {
   display: none;
 }
@@ -258,7 +259,6 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
-
 }
 
 .video-participant {
