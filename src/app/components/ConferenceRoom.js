@@ -28,9 +28,12 @@ class ConferenceRoom extends Component {
 
   launchConferenceTestCat() {
     const layoutType = document.getElementById("select-layout-test").value;
-    const conferenceAccessTokenTest = document.getElementById("conferenceAccessTokenTest").value;
-    const conferenceNameCatTest = document.getElementById("conferenceNameCatTest")
-      .value;
+    const conferenceAccessTokenTest = document.getElementById(
+      "conferenceAccessTokenTest"
+    ).value;
+    const conferenceNameCatTest = document.getElementById(
+      "conferenceNameCatTest"
+    ).value;
     const userInfo = { user: {} };
     const constraints = {
       video: false,
@@ -45,10 +48,15 @@ class ConferenceRoom extends Component {
     initialized.then(() =>
       this.props
         .dispatch(
-          ConferenceActions.join(conferenceNameCatTest, constraints, conferenceAccessTokenTest, {
-            name: "Mixer",
-            externalId: "Mixer_record",
-          })
+          ConferenceActions.join(
+            conferenceNameCatTest,
+            constraints,
+            conferenceAccessTokenTest,
+            {
+              name: "Mixer",
+              externalId: "Mixer_record",
+            }
+          )
         )
         .then(() => this.setState({ isLaunch: true, layoutType: layoutType }))
     );
@@ -83,8 +91,12 @@ class ConferenceRoom extends Component {
 
   launchReplayConferenceTestCat() {
     const layoutType = document.getElementById("select-layout-test").value;
-    const conferenceIdReplayTestCat = document.getElementById("conferenceIdReplayTestCat").value;
-    const conferenceAccessTokenReplayTest = document.getElementById("conferenceAccessTokenReplayTest").value;
+    const conferenceIdReplayTestCat = document.getElementById(
+      "conferenceIdReplayTestCat"
+    ).value;
+    const conferenceAccessTokenReplayTest = document.getElementById(
+      "conferenceAccessTokenReplayTest"
+    ).value;
     const initialized = this.props.dispatch(
       ConferenceActions.initialize(
         this.props.consumerKey,
@@ -95,10 +107,15 @@ class ConferenceRoom extends Component {
     initialized.then(() =>
       this.props
         .dispatch(
-          ConferenceActions.replay(conferenceIdReplayTestCat, 0, conferenceAccessTokenReplayTest, {
-            name: "Mixer",
-            externalId: "Mixer_record",
-          })
+          ConferenceActions.replay(
+            conferenceIdReplayTestCat,
+            0,
+            conferenceAccessTokenReplayTest,
+            {
+              name: "Mixer",
+              externalId: "Mixer_record",
+            }
+          )
         )
         .then(() => this.setState({ isLaunch: true, layoutType: layoutType }))
     );
@@ -180,6 +197,10 @@ class ConferenceRoom extends Component {
         )
         .then(() => this.setState({ isLaunch: true, layoutType: layoutType }))
     );
+  }
+
+  leaveConference() {
+    this.props.dispatch(ConferenceActions.leave());
   }
 
   launchReplayConference() {
@@ -360,11 +381,15 @@ class ConferenceRoom extends Component {
               data-number-user={participantConnected.length}
             >
               <div id="conferenceStartedVoxeet"></div>
+              <button
+                id="leaveConference"
+                onClick={this.leaveConference.bind(this)}
+              >
+                Leave conference
+              </button>
               <div>
                 {(screenShareMode || filePresentationMode) &&
-                  !videoPresentationMode &&
-                    <TilePiP />
-                }
+                  !videoPresentationMode && <TilePiP />}
                 {participantConnected.length > 0 ? (
                   <ScreenShareMode
                     screenShareMode={screenShareMode}
@@ -395,6 +420,12 @@ class ConferenceRoom extends Component {
               data-number-user={participantConnected.length}
             >
               <div id="conferenceStartedVoxeet"></div>
+              <button
+                id="leaveConference"
+                onClick={this.leaveConference.bind(this)}
+              >
+                Leave conference
+              </button>
               <div id="tile-list" className="tiles-list-generic">
                 {participantConnected.length > 0 ? (
                   participantConnected.map((participant, i) => {
