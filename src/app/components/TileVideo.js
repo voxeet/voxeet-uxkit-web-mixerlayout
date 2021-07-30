@@ -22,7 +22,7 @@ class TileVideo extends Component {
                         <AttendeesParticipantVideo width={width} stream={stream} />
                     </div>
                     :
-                    <AttendeesParticipantVuMeter participant={participant} width={80} height={80} customClass={"preview-avatar"} />
+                    <AttendeesParticipantVuMeter participant={participant} width={"80"} height={"80"} customClass={"preview-avatar"} />
                 }
             </span>
         )
@@ -30,8 +30,8 @@ class TileVideo extends Component {
 }
 
 TileVideo.propTypes = {
-    width: PropTypes.number,
-    height: PropTypes.number,
+    width: PropTypes.string,
+    height: PropTypes.string,
     participant: PropTypes.object.isRequired,
     stream: PropTypes.object
 }

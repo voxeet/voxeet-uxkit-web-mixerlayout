@@ -64,14 +64,14 @@ class AttendeesParticipantVuMeter extends Component {
 AttendeesParticipantVuMeter.propTypes = {
   participant: PropTypes.object.isRequired,
   customClass: PropTypes.string,
-  width: PropTypes.number,
-  height: PropTypes.number,
+  width: PropTypes.string,
+  height: PropTypes.string,
   includeName: PropTypes.bool,
 };
 
 AttendeesParticipantVuMeter.defaultProps = {
-  width: 60,
-  height: 60,
+  width: "60",
+  height: "60",
   includeName: false,
 };
 
