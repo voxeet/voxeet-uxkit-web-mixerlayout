@@ -1,4 +1,4 @@
-# Dolby Interactivity APIs Mixer Layout App
+# Dolby.io Communications APIs Mixer Layout App
 
 <p align="center">
 <img src="wiki/dolbyio.jpeg" alt="Dolby.io logo" title="Dolby.io logo" width="200"/>
@@ -6,7 +6,7 @@
 
 ## Concept
 
-A mixer layout app is a web app that the Dolby Interactivity APIs Platform (the Platform) can use to determine the display for a video presentation of a conference.
+A mixer layout app is a web app that the Dolby.io Communications APIs platform can use to determine the display for a video presentation of a conference.
 The mix can be of either a live conference or of a conference that has been recorded.
 The result can be an MP4 video file or can be streamed to an RTMP endpoint (like YouTube, Facebook...) or using `HTTP Live Streaming` (HLS).
 
@@ -16,7 +16,7 @@ As participants join and leave, start and stop video streams or screen, file or 
 The layout does not need to be constant and can change depending on who is talking or who is sharing a screen.
 For example, the layout may be equal sized tiles for the majority of the video but when a screen is being shared, the layout could change to show only that screen.
 
-1. The Platform communicates with the layout app by filling out input fields and “clicking” buttons.
+1. The Communciations API communicates with the layout app by filling out input fields and “clicking” buttons.
    The input fields are used to define the details of the conference to be used to produce the presentation.
    When one of the buttons is clicked, the layout app takes the values in these fields to connect to the conference or the recording.
 
@@ -34,11 +34,11 @@ For example, the layout may be equal sized tiles for the majority of the video b
    <button id="replayConference" onClick="{this.launchReplayConference.bind(this)}">Replay conference</button>
    ```
 
-   The Platform triggers either the `joinConference` button or the `replayConference` button, depending on whether the conference is live or a replay.
-   The mixer layout then uses the Dolby Interactivity APIs Web SDK to join the conference as a mixer and creates the layout based on the number and state of the participants in the conference.
+   The Communications API triggers either the `joinConference` button or the `replayConference` button, depending on whether the conference is live or a replay.
+   The mixer layout then uses the Dolby.io Communications SDK for Web to join the conference as a mixer and creates the layout based on the number and state of the participants in the conference.
 
-2. The Platform needs to know when the layout has been prepared for the mix to begin and when the conference is over.
-   This is done by the layout app presenting `div`s with specific `id`s. The Platform looks for:
+2. The Communications API needs to know when the layout has been prepared for the mix to begin and when the conference is over.
+   This is done by the layout app presenting `div`s with specific `id`s. The Communications API looks for:
 
    - `<div id="conferenceStartedVoxeet"></div>`. By adding this element into the DOM, the layout app indicates it is ready for the mix to begin.
    - `<div id="conferenceEndedVoxeet"></div>`. By adding this element into the DOM, the layout app indicates that the conference is over.
@@ -53,7 +53,7 @@ For example, the layout may be equal sized tiles for the majority of the video b
    - `hls`, which is used for streaming using HLS.
 
    The mixer layout can vary the layout based on the type.
-   For example, for a live recording of a conference, the Platform will set the values for the input with id `layoutType` to `record`.
+   For example, for a live recording of a conference, the Communications API will set the values for the input with id `layoutType` to `record`.
    The mixer layout can then present the appropriate layout for this situation.
 
 ## Project setup
@@ -133,7 +133,7 @@ The layout used is selected based on the situation. Factors considered include:
 - participants sharing a screen
 - demo mode active
 
-The app then starts listening for update from the Platform about changes in the conference. For example, participants joining, starting videos or screenshare, and so on.
+The app then starts listening for update from the Communications API about changes in the conference. For example, participants joining, starting videos or screenshare, and so on.
 The layout is formed using the other components.
 
 #### `Tile`
@@ -181,7 +181,7 @@ This component is used by `TileVideo` to show a presenter who does not have came
 ### Actions / Reducers
 
 - `ConferenceActions.js`/`ConferenceReducer.js`
-  This action and reducer contain all events from the Platform (participant join, left, start screenshare, ...)
+  This action and reducer contain all events from the Communications API (participant join, left, start screenshare, ...)
 
 - `ParticipantActions.js`/`ParticipantReducer.js`
   This action and reducer contain all information about CONNECTED users
@@ -201,10 +201,10 @@ This will generate `dist/index.html` and `dist/out.js`.
 
 ## Host and deploy
 
-To request the Platform to use your layout app, you will need to host and deploy the app.
+To request the Communications API to use your layout app, you will need to host and deploy the app.
 
 - When your layout is deployed, go to your account on `https://dolby.io/dashboard/applications/summary`.
-- Select your application from the list on the left and then select the `Interactivity APIs` section.
+- Select your application from the list on the left and then select the `Communications APIs` section.
 - Under the `Settings` tab, set the `Recording Mixer Layout URL` in the `Recording` section. Set the other options as needed.
 
 ## Dependencies
