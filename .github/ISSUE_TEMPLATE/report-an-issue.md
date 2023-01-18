@@ -1,9 +1,9 @@
 ---
 name: Report an issue
-about: Use this template to report an issue to Voxeet.
+about: Use this template to report an issue to Dolby.io.
 title: ''
 labels: bug
-assignees: Energizz
+assignees: FabienLavocat
 
 ---
 
@@ -11,9 +11,9 @@ assignees: Energizz
 
 [A clear and concise description of what the bug is.]
 
-**Expected Behaviour**
+**Expected Behavior**
 
-[Describe the expected behaviour of the feature.]
+[Describe the expected behavior of the feature.]
 
 **Steps to Reproduce the Problem**
 
@@ -21,7 +21,7 @@ assignees: Energizz
   2. Click...
   3. See the...
 
-**Minimalistic code (recommended)**
+**Minimal code (recommended)**
 
 [Please provide a link to a repository showing specifically the issue. It should only have the minimal footprint of your own implementation - something which does not requires any NDA.]
 
@@ -33,7 +33,7 @@ assignees: Energizz
   - Subsystem: [e.g. n.a., CyanogenMod, ...]
   - Version:
     - _for each libraries : name -> version_
-    - [e.g. @voxeet/voxeet-sdk 1.8.7]
+    - [e.g. @voxeet/voxeet-sdk 3.8.1]
     - [e.g. @voxeet/react-components 0.31.0]
     - [e.g. node 10.15.0]
     - [...]
