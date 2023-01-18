@@ -1,6 +1,8 @@
+const package = require("./package.json");
 const path = require("path");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 try {
   require("os").networkInterfaces();
@@ -52,6 +54,15 @@ module.exports = {
       inject: true,
       template: "./public/index.html",
     }),
-    new webpack.NoEmitOnErrorsPlugin(),
+    new webpack.DefinePlugin({
+      __VERSION__: JSON.stringify(package.version),
+    }),
+    new CopyWebpackPlugin({
+      patterns:[
+       { from: "./node_modules/@voxeet/voxeet-web-sdk/dist/dvwc_impl.wasm", noErrorOnMissing: true },
+       { from: "./node_modules/@voxeet/voxeet-web-sdk/dist/voxeet-dvwc-worker.js", noErrorOnMissing: true },
+       { from: "./node_modules/@voxeet/voxeet-web-sdk/dist/voxeet-worklet.js", noErrorOnMissing: true },
+     ]
+    }),
   ],
 };

@@ -1,39 +1,42 @@
 {
   "name": "voxeet-mix-layout",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "private": true,
-  "dependencies": {
-    "@voxeet/voxeet-web-sdk": "3.2.0",
-    "axios": "^0.21.1",
-    "react": "^16.7.0",
-    "react-dom": "^16.7.0",
-    "react-player": "2.7.2",
-    "react-redux": "^5.0.7",
-    "redux": "^3.7.2",
-    "redux-promise": "^0.6.0",
-    "redux-thunk": "^2.3.0"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.0.0-0",
-    "@babel/plugin-proposal-decorators": "^7.14.5",
-    "@babel/plugin-transform-modules-commonjs": "^7.14.5",
-    "@babel/plugin-transform-runtime": "^7.14.5",
-    "@babel/preset-env": "^7.14.7",
-    "@babel/preset-react": "^7.14.5",
-    "babel-core": "^7.0.0-bridge",
-    "babel-loader": "^8.2.2",
-    "css-loader": "^5.2.6",
-    "file-loader": "^0.11.2",
-    "html-webpack-plugin": "^5.3.2",
-    "react-hot-loader": "^4.13.0",
-    "style-loader": "^3.0.0",
-    "url-loader": "^0.5.9",
-    "webpack": "^5.41.0",
-    "webpack-cli": "^4.7.2",
-    "webpack-dev-server": "^3.11.2"
-  },
+  "author": "Dolby.io",
+  "license": "MIT",
   "scripts": {
     "start": "webpack serve --mode=development",
     "build": "npx webpack --mode=production --output-filename out.js --output-path dist"
+  },
+  "dependencies": {
+    "@voxeet/voxeet-web-sdk": "^3.8.1",
+    "axios": "^0.21.1",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-player": "^2.9.0",
+    "react-redux": "^7.2.4",
+    "redux": "^4.1.0",
+    "redux-promise": "0.6.0",
+    "redux-thunk": "2.3.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.14.8",
+    "@babel/plugin-proposal-decorators": "^7.14.5",
+    "@babel/plugin-transform-modules-commonjs": "^7.14.5",
+    "@babel/plugin-transform-runtime": "^7.14.5",
+    "@babel/preset-env": "^7.14.8",
+    "@babel/preset-react": "^7.14.5",
+    "babel-core": "^7.0.0-bridge",
+    "babel-loader": "^8.2.2",
+    "copy-webpack-plugin": "^9.0.1",
+    "css-loader": "^5.2.6",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.3.2",
+    "react-hot-loader": "^4.13.0",
+    "style-loader": "^3.1.0",
+    "url-loader": "^4.1.1",
+    "webpack": "5.72.0",
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^4.9.0"
   }
 }
