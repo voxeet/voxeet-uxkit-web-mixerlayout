@@ -8,7 +8,7 @@
 
 A mixer layout app is a web app that the Dolby.io Communications APIs platform can use to determine the display for a video presentation of a conference.
 The mix can be of either a live conference or of a conference that has been recorded.
-The result can be an MP4 video file or can be streamed to an RTMP endpoint (like YouTube, Facebook...) or using `HTTP Live Streaming` (HLS).
+The result can be an MP4 video file or can be streamed to an RTMP endpoint (like YouTube, Facebook...) or using Real-time Streaming (RTS).
 
 The resulting presentation can contain the video from each participant, as well as screens, files or videos being shared, and the size and position of each is under the control of the layout app.
 As participants join and leave, start and stop video streams or screen, file or video sharing, the layout app is updated with these changes, allowing for a dynamic layout.
@@ -16,7 +16,7 @@ As participants join and leave, start and stop video streams or screen, file or 
 The layout does not need to be constant and can change depending on who is talking or who is sharing a screen.
 For example, the layout may be equal sized tiles for the majority of the video but when a screen is being shared, the layout could change to show only that screen.
 
-1. The Communciations API communicates with the layout app by filling out input fields and “clicking” buttons.
+1. The Communications API communicates with the layout app by filling out input fields and “clicking” buttons.
    The input fields are used to define the details of the conference to be used to produce the presentation.
    When one of the buttons is clicked, the layout app takes the values in these fields to connect to the conference or the recording.
 
@@ -50,7 +50,7 @@ For example, the layout may be equal sized tiles for the majority of the video b
    - `record`, which is used to record live conference;
    - `replay`, which is used to record a replay of a conference;
    - `stream`, which is used to stream to YouTube or Facebook; or
-   - `hls`, which is used for streaming using HLS.
+   - `rts`, which is used for streaming using RTS.
 
    The mixer layout can vary the layout based on the type.
    For example, for a live recording of a conference, the Communications API will set the values for the input with id `layoutType` to `record`.
@@ -61,7 +61,7 @@ For example, the layout may be equal sized tiles for the majority of the video b
 - Download the project with:
 
   ```bash
-  git clone git@github.com:voxeet/voxeet-uxkit-web-mixerlayout.git
+  git clone https://github.com/voxeet/voxeet-uxkit-web-mixerlayout
   ```
 
 - Install the dependencies with:
@@ -213,5 +213,3 @@ To request the Communications API to use your layout app, you will need to host 
 - [ReactJS](https://reactjs.org/) - A JavaScript library for building user interfaces
 - [Redux](https://redux.js.org/) - Redux is a predictable state container for JavaScript apps.
 - [Webpack](https://webpack.js.org/) - Bundle your project
-
-© 2021 Dolby Laboratories
